@@ -21,7 +21,6 @@
 
 👤 **Ray**
 
-* Website: theroyz.com
 * Twitter: [@ray.concepts](https://twitter.com/ray.concepts)
 * Github: [@ray-concepts](https://github.com/ray-concepts)
 * LinkedIn: [@ray.concepts](https://linkedin.com/in/ray.concepts)
