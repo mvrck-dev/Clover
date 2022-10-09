@@ -1,3 +1,3 @@
 {
-    "files": ["vault8_login.ui","main.py","Resources.qrc", "vault8_signup.ui"]
+    "files": ["vault8_login.ui","main.py","Resources.qrc", "vault8_signup.ui", "vault8_dashboard.ui"]
 }
