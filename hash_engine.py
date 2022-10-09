@@ -3,12 +3,13 @@ import hashlib
 salt = "2JZ"
 def hash(pwd):
     hash = salt + pwd
+    print(hash)
     hashed_string = hashlib.sha256(hash.encode('utf-8')).hexdigest()
     return hashed_string
     
-x = input("Enter a string: ")
-cont = "3c5e8f6ff9b88a6adc47ae6c18acac5234bbf08e6b534b6937bf0c863bef778a"
-hashed = hash(x)
+# x = input("Enter a string: ")
+# cont = "3c5e8f6ff9b88a6adc47ae6c18acac5234bbf08e6b534b6937bf0c863bef778a"
+# hashed = hash(x)
 # print(hashed)
 # print(hashed)
 # if hashed == cont:
