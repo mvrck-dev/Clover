@@ -19,10 +19,12 @@ class LoginScreen(QDialog):
         super(LoginScreen, self).__init__()
         label = QLabel(self)
         pixmap = QPixmap("Resources/vault8_login_wrapper_v0.1.png")
+        
         label.setPixmap(pixmap)
         loadUi("vault8_login.ui", self)
 
-        self.loginbutton.clicked.connect(self.loginfunction)
+        # self.loginbutton.clicked.connect(self.loginfunction)
+        self.loginbutton.clicked.connect(self.gotodashboard) #testing
         self.signupbutton.clicked.connect(self.gotocreate)
 
     def loginfunction(self):
@@ -32,14 +34,18 @@ class LoginScreen(QDialog):
         if len(user) == 0 or len(password) == 0:
             self.alertbox.setText("Please Input all Fields!")
         else:
-            hashed_pwd = hash.hash(password)
-            cur.execute(f"SELECT password FROM login_info WHERE username ={user}")
-            result_pass = cur.fetchone()[0]
-            if result_pass == password:
-                print("Successfully logged in.")
-                self.error.setText("")
-            else:
-                self.error.setText("Invalid username or password")
+            hashed_pwd = hash(password)
+            # self.alertbox.setText(hashed_pwd) #Tested and working
+            # cur.execute(f"SELECT password FROM login_info WHERE username ={user}")
+            # result_pass = cur.fetchone()[0]
+            # if db_pwd == hashed_pwd:
+            #     print("Successfully logged in.")
+            #     self.error.setText("")
+            #     self.connect(self.dashbaord)
+            
+            # else:
+            #     self.error.setText("Invalid username or password")
+
 
 
             # INSERT DATABASE LOGIC
@@ -47,6 +53,11 @@ class LoginScreen(QDialog):
     def gotocreate(self):
         signup = SignUpScreen()
         widget.addWidget(signup)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+    
+    def gotodashboard(self):
+        dashboard = DashboardScreen()
+        widget.addWidget(dashboard)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
 class SignUpScreen(QDialog):
@@ -81,6 +92,20 @@ class SignUpScreen(QDialog):
             # hashed_pwd = hash_engine.hash(password)
             #INSERT HASHING MODULE AND DATABASE LOGIC
 
+class DashboardScreen(QDialog):
+    def __init__(self):
+        super(DashboardScreen, self).__init__()
+        label = QLabel(self)
+        # pixmap = QPixmap("Resources/vault8_login_wrapper_v0.1.png") #Change Backround
+        # label.setPixmap(pixmap)
+        loadUi("vault8_dashboard.ui",self)
+
+        # self.logoutbtn.clicked.connect(self.logoutfunction) #LogOut Function
+
+    def logoutfunction(self):
+        login = LoginScreen()
+        widget.addWidget(login)
+        widget.setCurrentIndex(widget.currentIndex() - 2)
 
 
 
