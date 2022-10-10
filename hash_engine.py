@@ -1,5 +1,6 @@
 import hashlib
 
+
 salt = "2JZ"
 def hash(pwd):
     hash = salt + pwd

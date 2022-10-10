@@ -3,7 +3,13 @@
         <file>Resources/vault8_login_wrapper_v0.1.png</file>
         <file>Resources/vault8_login_wrapper.png</file>
     </qresource>
+<<<<<<< Updated upstream
     <qresource prefix="/Fonts">
         <file>ITC-AvantGardeSTD.ttf</file>
+=======
+    <qresource prefix="/Icons">
+        <file>Resources/logout_icon.png</file>
+
+>>>>>>> Stashed changes
     </qresource>
 </RCC>

@@ -1,5 +1,6 @@
 import mysql.connector as dbcn
 
+
 # Initialising Database
 activedb = dbcn.connect(host = "localhost", user = "root", password= "destiny012", database = "Vault8")
 print("Initialised MySql Database Connection.")

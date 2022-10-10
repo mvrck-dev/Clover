@@ -125,8 +125,38 @@
      <string>appname</string>
     </property>
    </widget>
+<<<<<<< Updated upstream
+=======
+   <widget class="QPushButton" name="logoutbtn">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>43</y>
+      <width>64</width>
+      <height>64</height>
+     </rect>
+    </property>
+    <property name="whatsThis">
+     <string>Logout</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="Resources.qrc">
+      <normaloff>:/Icons/Resources/logout_icon.png</normaloff>:/Icons/Resources/logout_icon.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>40</width>
+      <height>40</height>
+     </size>
+    </property>
+   </widget>
+>>>>>>> Stashed changes
   </widget>
  </widget>
  <resources/>
  <connections/>
 </ui>
+
