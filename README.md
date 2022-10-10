@@ -33,6 +33,3 @@ Give a ⭐️ if this project helped you!
 
 Copyright © 2022 [Ray](https://github.com/ray-concepts).<br />
 This project is [MIT](https://github.com/ray-concepts/Vault8/blob/main/LICENSE) licensed.
-
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
