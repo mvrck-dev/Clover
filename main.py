@@ -97,7 +97,12 @@ class DashboardScreen(QDialog):
         super(DashboardScreen, self).__init__()
         
         loadUi("vault8_dashboard.ui",self)
+        # Load Button Icons
         self.logoutbtn.setIcon(QIcon("Resources/logout_icon.png"))
+        self.addbtn.setIcon(QIcon("Resources/add_icon.png"))
+        self.removebtn.setIcon(QIcon("Resources/remove_icon.png"))
+
+        #Load Button Functions
         self.logoutbtn.clicked.connect(self.logoutfunction) #LogOut Function
 
     def logoutfunction(self):
