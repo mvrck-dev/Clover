@@ -24,8 +24,9 @@ class LoginScreen(QDialog):
         loadUi("vault8_login.ui", self)
 
         # self.loginbutton.clicked.connect(self.loginfunction)
-        self.loginbutton.clicked.connect(self.gotodashboard) #testing
         self.signupbutton.clicked.connect(self.gotocreate)
+        self.loginbutton.clicked.connect(self.gotodashboard) #testing
+        
 
     def loginfunction(self):
         user = self.usrnmfield.text()
