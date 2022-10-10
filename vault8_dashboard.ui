@@ -125,8 +125,6 @@
      <string>appname</string>
     </property>
    </widget>
-<<<<<<< Updated upstream
-=======
    <widget class="QPushButton" name="logoutbtn">
     <property name="geometry">
      <rect>
@@ -153,7 +151,6 @@
      </size>
     </property>
    </widget>
->>>>>>> Stashed changes
   </widget>
  </widget>
  <resources/>

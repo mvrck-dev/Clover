@@ -1,7 +1,7 @@
 
 import sys
 from PyQt6.uic import loadUi
-from PyQt6.QtWidgets import QApplication, QDialog, QLabel, QLineEdit, QWidget
+from PyQt6.QtWidgets import QApplication, QDialog, QLabel, QLineEdit, QWidget, QPushButton
 from PyQt6.QtGui import QIcon, QPixmap, QFont, QFontDatabase
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
@@ -95,17 +95,15 @@ class SignUpScreen(QDialog):
 class DashboardScreen(QDialog):
     def __init__(self):
         super(DashboardScreen, self).__init__()
-        label = QLabel(self)
-        # pixmap = QPixmap("Resources/vault8_login_wrapper_v0.1.png") #Change Backround
-        # label.setPixmap(pixmap)
+        
         loadUi("vault8_dashboard.ui",self)
-
-        # self.logoutbtn.clicked.connect(self.logoutfunction) #LogOut Function
+        self.logoutbtn.setIcon(QIcon("Resources/logout_icon.png"))
+        self.logoutbtn.clicked.connect(self.logoutfunction) #LogOut Function
 
     def logoutfunction(self):
         login = LoginScreen()
         widget.addWidget(login)
-        widget.setCurrentIndex(widget.currentIndex() - 2)
+        widget.setCurrentIndex(widget.currentIndex() - 1)
 
 
 
@@ -120,6 +118,14 @@ class DashboardScreen(QDialog):
 
 
 app = QApplication(sys.argv)
+
+# app.setStyleSheet("""
+# #logoutbtn{
+#     border-radius: 0px:
+#     border-color: #00000000;
+#     background-color: #00000000;"
+# }
+# """)
 mainwindow = LoginScreen()
 widget = QtWidgets.QStackedWidget()
 widget = QtWidgets.QStackedWidget()
