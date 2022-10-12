@@ -1,5 +1,5 @@
 
-from random import randbytes
+from random import randbytes, random
 import sys
 from PyQt6.uic import loadUi
 from PyQt6.QtWidgets import QApplication, QDialog, QLabel, QLineEdit, QWidget, QPushButton
@@ -46,17 +46,16 @@ class LoginScreen(QDialog):
             else:
                 self.alertbox.setText("Invalid Password!")
 
+    def gotocreate(self):
+        signup = SignUpScreen()
+        widget.addWidget(signup)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
     def gotodashboard(self):
         dashboard = DashboardScreen()
         widget.addWidget(dashboard)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
-    def gotocreate(self):
-        signup = SignUpScreen()
-        widget.addWidget(signup)
-        widget.setCurrentIndex(widget.currentIndex() + 2)
-    
-    
 
 class SignUpScreen(QDialog):
     def __init__(self):
@@ -68,12 +67,6 @@ class SignUpScreen(QDialog):
 
         self.signupbutton.clicked.connect(self.SignUpFunction)
         self.returnbtn.clicked.connect(self.gotologin)
-
-    def gotologin(self):
-        login = LoginScreen()
-        widget.addWidget(login)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
-
 
     def SignUpFunction(self):
         user = self.usrnmfield.text()
@@ -87,9 +80,19 @@ class SignUpScreen(QDialog):
         elif password != password_b:
             self.alertbox.setText("Passwords do not match, Try Again!")
         else:
-            self.alertbox.setText(f"{user}, {email}, {password}, {password_b}") #Testing Input Fields
-            # hashed_pwd = hash_engine.hash(password)
-            #INSERT HASHING MODULE AND DATABASE LOGIC
+            user_db = user + "_appdb"
+            hashed_pwd = hash(password)
+            self.alertbox.setText(f"{user_db}, {email}, {password}, {password_b}, {hashed_pwd}") #testing
+            cur.execute(f"CREATE TABLE if not exists {user_db}(userid int(5), username varchar(20) NOT NULL, appname(20) NOT NULL, app_password varchar(1000) NOT NULL);")
+            cur.execute(f"INSERT INTO master_login_db (username, email, password) VALUES ('{user}', '{email}', '{hashed_pwd}')")
+            activedb.commit()
+            self.signupbutton.clicked.connect(self.gotologin)
+           #INSERT HASHING MODULE AND DATABASE LOGIC
+
+    def gotologin(self):
+        login = LoginScreen()
+        widget.addWidget(login)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
 
 class DashboardScreen(QDialog):
     def __init__(self):
@@ -110,26 +113,7 @@ class DashboardScreen(QDialog):
         widget.setCurrentIndex(widget.currentIndex() - 1)
 
 
-
-# class NewAccScreen(QDialog):
-#     def __init__(self):
-#         super(NewAccScreen, self).__init__()
-#         load_ui.loadUi("vault8_newacc.ui", self)
-
-#         label = QLabel(self)
-#         pixmap = QPixmap("Resources/vault8_login_wrapper_v0.1.png")
-#         label.setPixmap(pixmap)
-
-
 app = QApplication(sys.argv)
-
-# app.setStyleSheet("""
-# #logoutbtn{
-#     border-radius: 0px:
-#     border-color: #00000000;
-#     background-color: #00000000;"
-# }
-# """)
 mainwindow = LoginScreen()
 widget = QtWidgets.QStackedWidget()
 widget = QtWidgets.QStackedWidget()
