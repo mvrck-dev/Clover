@@ -14,8 +14,8 @@ activedb = dbcn.connect(host = "localhost", user = "root", password= "destiny012
 cur = activedb.cursor()
 
 
-# JUST GETTING THIS PART RUNNING BROKE MY ASS
-class LoginScreen(QDialog):
+
+class LoginScreen(QDialog): # Login Screen
     def __init__(self):
         super(LoginScreen, self).__init__()
         label = QLabel(self)
@@ -26,10 +26,9 @@ class LoginScreen(QDialog):
 
         self.loginbutton.clicked.connect(self.loginfunction)
         self.signupbutton.clicked.connect(self.gotocreate)
-        # self.loginbutton.clicked.connect(self.gotodashboard) #testing
         
 
-    def loginfunction(self):
+    def loginfunction(self): # This is the login function [Done!]
         user = self.usrnmfield.text()
         password = self.pwdfield.text()
 
@@ -46,18 +45,18 @@ class LoginScreen(QDialog):
             else:
                 self.alertbox.setText("Invalid Password!")
 
-    def gotocreate(self):
+    def gotocreate(self): #[WIP]
         signup = SignUpScreen()
         widget.addWidget(signup)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
-    def gotodashboard(self):
+    def gotodashboard(self): #[WIP]
         dashboard = DashboardScreen()
         widget.addWidget(dashboard)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
-class SignUpScreen(QDialog):
+class SignUpScreen(QDialog): # Sign Up Screen
     def __init__(self):
         super(SignUpScreen, self).__init__()
         label = QLabel(self)
@@ -68,7 +67,7 @@ class SignUpScreen(QDialog):
         self.signupbutton.clicked.connect(self.SignUpFunction)
         self.returnbtn.clicked.connect(self.gotologin)
 
-    def SignUpFunction(self):
+    def SignUpFunction(self): # This is the sign up function [WIP!]
         user = self.usrnmfield.text()
         email = self.emailfield.text()
         password = self.pwdfield.text()
@@ -89,12 +88,12 @@ class SignUpScreen(QDialog):
             self.signupbutton.clicked.connect(self.gotologin)
            #INSERT HASHING MODULE AND DATABASE LOGIC
 
-    def gotologin(self):
+    def gotologin(self): #[WIP]
         login = LoginScreen()
         widget.addWidget(login)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
-class DashboardScreen(QDialog):
+class DashboardScreen(QDialog): # Dashboard Screen
     def __init__(self):
         super(DashboardScreen, self).__init__()
         
@@ -107,7 +106,7 @@ class DashboardScreen(QDialog):
         #Load Button Functions
         self.logoutbtn.clicked.connect(self.logoutfunction) #LogOut Function
 
-    def logoutfunction(self):
+    def logoutfunction(self): #[WIP]
         login = LoginScreen()
         widget.addWidget(login)
         widget.setCurrentIndex(widget.currentIndex() - 1)
