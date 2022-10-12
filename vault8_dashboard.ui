@@ -138,13 +138,16 @@
     <property name="geometry">
      <rect>
       <x>750</x>
-      <y>43</y>
+      <y>45</y>
       <width>64</width>
       <height>64</height>
      </rect>
     </property>
     <property name="whatsThis">
      <string>Logout</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#logoutbtn{background-color: #00000000;}</string>
     </property>
     <property name="text">
      <string/>
@@ -172,6 +175,9 @@
     <property name="whatsThis">
      <string>Logout</string>
     </property>
+    <property name="styleSheet">
+     <string notr="true">#addbtn{background-color: #00000000;}</string>
+    </property>
     <property name="text">
      <string/>
     </property>
@@ -197,6 +203,9 @@
     </property>
     <property name="whatsThis">
      <string>Logout</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#removebtn{background-color: #00000000;}</string>
     </property>
     <property name="text">
      <string/>
