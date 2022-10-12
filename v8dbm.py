@@ -14,3 +14,4 @@ print("Database Vault8 is Active.")
 cur.execute(f"CREATE TABLE if not exists master_login_db(userid int(5) PRIMARY KEY, username varchar(20) NOT NULL UNIQUE, email varchar(50) NOT NULL UNIQUE, password varchar(1000) NOT NULL);")
 print("Master Login is now active")
 
+#insert into master_login_db values(0001, 'ray', 'concepts.ray@gmail.com', '08ed649a54beeca6e677962ea65ce7ea20267dc0ce4a0c88b6a6d5bdf22a5e71');

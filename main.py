@@ -1,4 +1,5 @@
 
+from random import randbytes
 import sys
 from PyQt6.uic import loadUi
 from PyQt6.QtWidgets import QApplication, QDialog, QLabel, QLineEdit, QWidget, QPushButton
@@ -23,9 +24,9 @@ class LoginScreen(QDialog):
         label.setPixmap(pixmap)
         loadUi("vault8_login.ui", self)
 
-        # self.loginbutton.clicked.connect(self.loginfunction)
+        self.loginbutton.clicked.connect(self.loginfunction)
         self.signupbutton.clicked.connect(self.gotocreate)
-        self.loginbutton.clicked.connect(self.gotodashboard) #testing
+        # self.loginbutton.clicked.connect(self.gotodashboard) #testing
         
 
     def loginfunction(self):
@@ -36,30 +37,26 @@ class LoginScreen(QDialog):
             self.alertbox.setText("Please Input all Fields!")
         else:
             hashed_pwd = hash(password)
-            # self.alertbox.setText(hashed_pwd) #Tested and working
-            # cur.execute(f"SELECT password FROM login_info WHERE username ={user}")
-            # result_pass = cur.fetchone()[0]
-            # if db_pwd == hashed_pwd:
-            #     print("Successfully logged in.")
-            #     self.error.setText("")
-            #     self.connect(self.dashbaord)
-            
-            # else:
-            #     self.error.setText("Invalid username or password")
+            cur.execute(f"SELECT password FROM master_login_db WHERE username = '{user}'")
+            result = cur.fetchall()
+            if len(result) == 0:
+                self.alertbox.setText("Invalid Username!")
+            elif hashed_pwd == result[0][0]:
+                self.loginbutton.clicked.connect(self.gotodashboard)
+            else:
+                self.alertbox.setText("Invalid Password!")
 
-
-
-            # INSERT DATABASE LOGIC
-
-    def gotocreate(self):
-        signup = SignUpScreen()
-        widget.addWidget(signup)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
-    
     def gotodashboard(self):
         dashboard = DashboardScreen()
         widget.addWidget(dashboard)
         widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def gotocreate(self):
+        signup = SignUpScreen()
+        widget.addWidget(signup)
+        widget.setCurrentIndex(widget.currentIndex() + 2)
+    
+    
 
 class SignUpScreen(QDialog):
     def __init__(self):
@@ -75,7 +72,7 @@ class SignUpScreen(QDialog):
     def gotologin(self):
         login = LoginScreen()
         widget.addWidget(login)
-        widget.setCurrentIndex(widget.currentIndex() - 1)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
     def SignUpFunction(self):
@@ -86,7 +83,7 @@ class SignUpScreen(QDialog):
 
         if len(user)==0 or len(password)==0 or len(email)==0 or len(password_b)==0:
             self.alertbox.setText("Please input all fields.")
-            
+
         elif password != password_b:
             self.alertbox.setText("Passwords do not match, Try Again!")
         else:
@@ -141,3 +138,16 @@ widget.setFixedHeight(530)
 widget.setFixedWidth(850)
 widget.show()
 sys.exit(app.exec())
+
+
+
+# self.alertbox.setText(hashed_pwd) #Tested and working
+            # cur.execute(f"SELECT password FROM login_info WHERE username ={user}")
+            # result_pass = cur.fetchone()[0]
+            # if db_pwd == hashed_pwd:
+            #     print("Successfully logged in.")
+            #     self.error.setText("")
+            #     self.connect(self.dashbaord)
+            
+            # else:
+            #     self.error.setText("Invalid username or password")

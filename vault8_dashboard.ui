@@ -166,7 +166,7 @@
    <widget class="QPushButton" name="addbtn">
     <property name="geometry">
      <rect>
-      <x>370</x>
+      <x>394</x>
       <y>173</y>
       <width>48</width>
       <height>48</height>
@@ -195,7 +195,7 @@
    <widget class="QPushButton" name="removebtn">
     <property name="geometry">
      <rect>
-      <x>438</x>
+      <x>462</x>
       <y>173</y>
       <width>48</width>
       <height>48</height>
@@ -219,6 +219,19 @@
       <width>40</width>
       <height>40</height>
      </size>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="pwdlst">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>240</y>
+      <width>490</width>
+      <height>270</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#pwdlst{border-radius: 25px, 25px, 0, 0;}</string>
     </property>
    </widget>
   </widget>
