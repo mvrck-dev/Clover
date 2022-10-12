@@ -86,6 +86,7 @@ class SignUpScreen(QDialog):
 
         if len(user)==0 or len(password)==0 or len(email)==0 or len(password_b)==0:
             self.alertbox.setText("Please input all fields.")
+            
         elif password != password_b:
             self.alertbox.setText("Passwords do not match, Try Again!")
         else:
