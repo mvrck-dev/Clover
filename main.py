@@ -9,6 +9,7 @@ from PyQt6.QtGui import *
 from PyQt6 import QtWidgets
 import mysql.connector as dbcn
 from hash_engine import hash
+import time
 
 activedb = dbcn.connect(host = "localhost", user = "root", password= "destiny012", database = "Vault8")
 cur = activedb.cursor()
@@ -44,6 +45,7 @@ class LoginScreen(QDialog): # Login Screen
                 self.loginbutton.clicked.connect(self.gotodashboard)
             else:
                 self.alertbox.setText("Invalid Password!")
+            timer.singleShot(3000, self.clear_alertbox)
 
     def gotocreate(self): #[WIP]
         signup = SignUpScreen()
@@ -86,6 +88,7 @@ class SignUpScreen(QDialog): # Sign Up Screen
             cur.execute(f"INSERT INTO master_login_db (username, email, password) VALUES ('{user}', '{email}', '{hashed_pwd}')")
             activedb.commit()
             self.signupbutton.clicked.connect(self.gotologin)
+            timer.singleShot(3000, self.clear_alertbox)
            #INSERT HASHING MODULE AND DATABASE LOGIC
 
     def gotologin(self): #[WIP]
@@ -105,7 +108,57 @@ class DashboardScreen(QDialog): # Dashboard Screen
 
         #Load Button Functions
         self.logoutbtn.clicked.connect(self.logoutfunction) #LogOut Function
+        self.addbtn.clicked.connect(self.add_app) #Add App Function
+        self.removebtn.clicked.connect(self.remove_app) #Remove App Function
+        self.applist.clicked.connect(self.display_app) #App Clicked Function
 
+        self.applist.setStyleSheet("""
+        QListWidget{border : 1px solid grey}
+        QListWidget::item{border : 1px solid grey; border-radius: 15px;}
+        QListWidget::item:selected{background-color: #3A3A3A; color: white}
+        QScrollBar{background :grey;} 
+        """)
+
+    #Add items to list
+    def add_app(self):
+        if len(self.appfield.text()) == 0:
+            self.alertbox.setText("Please input an app name!")
+            self.alertbox.setStyleSheet("background-color: #ff4747; color: #ffffff;")
+            timer.singleShot(3000, self.clear_alertbox)
+        else:
+            app_name = self.appfield.text()
+            self.applist.addItem(app_name)
+            self.appfield.setText("")
+            self.alertbox.setText("App Added!")
+            self.alertbox.setStyleSheet("background-color: #E4FFDF; color: #0F462D;")
+            timer.singleShot(3000, self.clear_alertbox)
+
+    #Remove items from list
+    def remove_app(self):
+        clicked_row = self.applist.currentRow()
+        self.applist.takeItem(clicked_row)
+        self.appname.setText("")
+        #Figured out that a one liner for this function would be 
+        #self.applist.takeItem(self.applist.currentRow())
+        #but I wanted to keep the extended function.
+
+    #Display App Data
+    def display_app(self):
+        clicked_item = self.applist.currentItem()
+        self.appname.setText(clicked_item.text())
+
+
+
+    #Clear Alert Box
+    def clear_alertbox(self):
+        self.alertbox.setText("")
+        self.alertbox.setStyleSheet("background-color: #00000000; color: #000000;")
+        
+
+
+ 
+
+    #LogOut Function
     def logoutfunction(self): #[WIP]
         login = LoginScreen()
         widget.addWidget(login)
@@ -113,24 +166,12 @@ class DashboardScreen(QDialog): # Dashboard Screen
 
 
 app = QApplication(sys.argv)
-mainwindow = LoginScreen()
+mainwindow = DashboardScreen()
 widget = QtWidgets.QStackedWidget()
 widget = QtWidgets.QStackedWidget()
 widget.addWidget(mainwindow)
 widget.setFixedHeight(530)
 widget.setFixedWidth(850)
 widget.show()
+timer = QTimer()
 sys.exit(app.exec())
-
-
-
-# self.alertbox.setText(hashed_pwd) #Tested and working
-            # cur.execute(f"SELECT password FROM login_info WHERE username ={user}")
-            # result_pass = cur.fetchone()[0]
-            # if db_pwd == hashed_pwd:
-            #     print("Successfully logged in.")
-            #     self.error.setText("")
-            #     self.connect(self.dashbaord)
-            
-            # else:
-            #     self.error.setText("Invalid username or password")
