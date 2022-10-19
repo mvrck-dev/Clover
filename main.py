@@ -11,6 +11,7 @@ import mysql.connector as dbcn
 from hash_engine import hash
 import time
 
+
 activedb = dbcn.connect(host = "localhost", user = "root", password= "destiny012", database = "Vault8")
 cur = activedb.cursor()
 
@@ -111,13 +112,8 @@ class DashboardScreen(QDialog): # Dashboard Screen
         self.addbtn.clicked.connect(self.add_app) #Add App Function
         self.removebtn.clicked.connect(self.remove_app) #Remove App Function
         self.applist.clicked.connect(self.display_app) #App Clicked Function
-
-        # self.applist.setStyleSheet("""
-        # QListWidget{border : 1px solid grey}
-        # QListWidget::item{border : 1px solid grey; border-radius: 15px;}
-        # QListWidget::item:selected{background-color: #3A3A3A; color: white}
-        # QScrollBar{background :grey;} 
-        # """)
+        self.generatepwd.clicked.connect(self.generate_password) #Generate Password Function
+        self.copypwd.clicked.connect(self.CtCpwd) #Copy to Clipboard Function
 
     #Add items to list
     def add_app(self):
@@ -133,19 +129,29 @@ class DashboardScreen(QDialog): # Dashboard Screen
             self.alertbox.setStyleSheet("background-color: #E4FFDF; color: #0F462D; border-radius:16px")
             timer.singleShot(3000, self.clear_alertbox)
 
+    def generate_password(self):
+        if self.applist.currentItem() == None:
+            self.alertbox.setText("Please select an app!")
+            self.alertbox.setStyleSheet("background-color: #ff4747; color: #ffffff;border: 0.1px; border-radius:16px;")
+            timer.singleShot(3000, self.clear_alertbox)
+        else:
+            app_name = self.applist.currentItem().text()
+            
+            self.alertbox.setText("Password Generated!")    
+
+    def CtCpwd(self):
+        self.alertbox.setText("Password Copied to Clipboard!")
+
     #Remove items from list
     def remove_app(self):
-        clicked_row = self.applist.currentRow()
-        self.applist.takeItem(clicked_row)
+        self.applist.takeItem(self.applist.currentRow())
         self.appname.setText("")
-        #Figured out that a one liner for this function would be 
-        #self.applist.takeItem(self.applist.currentRow())
-        #but I wanted to keep the extended function.
 
     #Display App Data
     def display_app(self):
-        clicked_item = self.applist.currentItem()
-        self.appname.setText(clicked_item.text())
+        self.appname.setText(self.applist.currentItem().text())
+
+
 
 
 
@@ -154,10 +160,6 @@ class DashboardScreen(QDialog): # Dashboard Screen
         self.alertbox.setText("")
         self.alertbox.setStyleSheet("background-color: #00000000; color: #000000;")
         
-
-
- 
-
     #LogOut Function
     def logoutfunction(self): #[WIP]
         login = LoginScreen()
