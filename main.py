@@ -112,25 +112,25 @@ class DashboardScreen(QDialog): # Dashboard Screen
         self.removebtn.clicked.connect(self.remove_app) #Remove App Function
         self.applist.clicked.connect(self.display_app) #App Clicked Function
 
-        self.applist.setStyleSheet("""
-        QListWidget{border : 1px solid grey}
-        QListWidget::item{border : 1px solid grey; border-radius: 15px;}
-        QListWidget::item:selected{background-color: #3A3A3A; color: white}
-        QScrollBar{background :grey;} 
-        """)
+        # self.applist.setStyleSheet("""
+        # QListWidget{border : 1px solid grey}
+        # QListWidget::item{border : 1px solid grey; border-radius: 15px;}
+        # QListWidget::item:selected{background-color: #3A3A3A; color: white}
+        # QScrollBar{background :grey;} 
+        # """)
 
     #Add items to list
     def add_app(self):
         if len(self.appfield.text()) == 0:
             self.alertbox.setText("Please input an app name!")
-            self.alertbox.setStyleSheet("background-color: #ff4747; color: #ffffff;")
+            self.alertbox.setStyleSheet("background-color: #ff4747; color: #ffffff;border: 0.1px; border-radius:16px;")
             timer.singleShot(3000, self.clear_alertbox)
         else:
             app_name = self.appfield.text()
             self.applist.addItem(app_name)
             self.appfield.setText("")
             self.alertbox.setText("App Added!")
-            self.alertbox.setStyleSheet("background-color: #E4FFDF; color: #0F462D;")
+            self.alertbox.setStyleSheet("background-color: #E4FFDF; color: #0F462D; border-radius:16px")
             timer.singleShot(3000, self.clear_alertbox)
 
     #Remove items from list
