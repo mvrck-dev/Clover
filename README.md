@@ -4,8 +4,8 @@
   <a href="https://github.com/ray-concepts/Vault8/blob/main/LICENSE" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
-  <a href="https://twitter.com/ray.concepts" target="_blank">
-    <img alt="Twitter: ray.concepts" src="https://img.shields.io/twitter/follow/ray.concepts.svg?style=social" />
+  <a href="https://twitter.com/rayconcepts12" target="_blank">
+    <img alt="Twitter: rayconcepts12" src="https://img.shields.io/twitter/follow/rayconcepts12.svg?style=social" />
   </a>
 </p>
 
