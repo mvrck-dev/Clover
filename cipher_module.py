@@ -4,6 +4,7 @@ from Crypto.Util.Padding import pad, unpad
 from hashlib import sha256
 import secrets
 import hashlib
+import random
 
 
 #CIPHER ENCRYPTION : To generate a unique Salt for encryption
@@ -33,6 +34,28 @@ def hash(pwd, salt):
     hashed_string = hashlib.sha256(hash.encode('utf-8')).hexdigest()
     return hashed_string
 
+#PASSWORD GENRATOR
+def pwd_generator():
+  letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
+             'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+  numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+  symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+  nr_letters = 10
+  nr_symbols = 4
+  nr_numbers = 6
+  password_list = []
+  for char in range(1, nr_letters + 1):
+      password_list += random.choice(letters)
+  for char in range(1, nr_symbols + 1):
+      password_list += random.choice(symbols)
+  for char in range(1, nr_numbers + 1):
+      password_list += random.choice(numbers)
+  random.shuffle(password_list)
+  password = ''
+  for char in password_list:
+      password += char
+  return password
+  
 # AES ENCRYPTION
 # def hkey(key):
 #     return hashlib.sha256(key.encode()).digest()
@@ -68,4 +91,5 @@ def aes_decrypt(key, appname, app_password):
     decrypted = cipher.decrypt(pad(app_password.encode("UTF-8"), AES.block_size))
     return b64encode(decrypted).decode('utf-8')      
     
+
 

@@ -46,7 +46,7 @@ class LoginScreen(QDialog): # Login Screen
                 self.loginbutton.clicked.connect(self.gotodashboard)
             else:
                 self.alertbox.setText("Invalid Password!")
-            timer.singleShot(3000, self.clear_alertbox)
+
 
     def gotocreate(self): #[WIP]
         signup = SignUpScreen()
@@ -66,9 +66,13 @@ class SignUpScreen(QDialog): # Sign Up Screen
         pixmap = QPixmap("Resources/vault8_login_wrapper_v0.1.png")
         label.setPixmap(pixmap)
         loadUi("vault8_signup.ui",self)
+        
+        #Styling
+        self.returnbtn.setIcon(QIcon("Resources/return_icon.png"))
 
-        self.signupbutton.clicked.connect(self.SignUpFunction)
+        #Assiging Functions to buttons
         self.returnbtn.clicked.connect(self.gotologin)
+        self.signupbutton.clicked.connect(self.SignUpFunction)
 
     def SignUpFunction(self): # This is the sign up function [WIP!]
         user = self.usrnmfield.text()
@@ -85,17 +89,43 @@ class SignUpScreen(QDialog): # Sign Up Screen
             user_db = user + "_appdb"
             hashed_pwd = hash(password)
             self.alertbox.setText(f"{user_db}, {email}, {password}, {password_b}, {hashed_pwd}") #testing
-            cur.execute(f"CREATE TABLE if not exists {user_db}(userid int(5), username varchar(20) NOT NULL, appname(20) NOT NULL, app_password varchar(1000) NOT NULL);")
+            cur.execute(f"CREATE TABLE if not exists {user_db}(username varchar(20) NOT NULL, appname varchar(20) NOT NULL, app_password varchar(1000) NOT NULL);")
             cur.execute(f"INSERT INTO master_login_db (username, email, password) VALUES ('{user}', '{email}', '{hashed_pwd}')")
             activedb.commit()
-            self.signupbutton.clicked.connect(self.gotologin)
-            timer.singleShot(3000, self.clear_alertbox)
-           #INSERT HASHING MODULE AND DATABASE LOGIC
+            # timer.singleShot(3000, self.clear_alertbox)
+            dashboard = DashboardScreen()
+            widget.addWidget(dashboard)
+            widget.setCurrentIndex(widget.currentIndex() + 1)
+
+
 
     def gotologin(self): #[WIP]
         login = LoginScreen()
         widget.addWidget(login)
         widget.setCurrentIndex(widget.currentIndex() + 1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class DashboardScreen(QDialog): # Dashboard Screen
     def __init__(self):
@@ -136,11 +166,20 @@ class DashboardScreen(QDialog): # Dashboard Screen
             timer.singleShot(3000, self.clear_alertbox)
         else:
             app_name = self.applist.currentItem().text()
-            
+            #Generate Password
+
             self.alertbox.setText("Password Generated!")    
 
     def CtCpwd(self):
-        self.alertbox.setText("Password Copied to Clipboard!")
+        if self.applist.currentItem() == None:
+            self.alertbox.setText("Please select an app!")
+            self.alertbox.setStyleSheet("background-color: #ff4747; color: #ffffff;border: 0.1px; border-radius:16px;")
+            timer.singleShot(3000, self.clear_alertbox)
+        else:
+            app_name = self.applist.currentItem().text()
+            #Copy to Clipboard
+
+            self.alertbox.setText("Password Copied to Clipboard!")
 
     #Remove items from list
     def remove_app(self):
@@ -151,7 +190,8 @@ class DashboardScreen(QDialog): # Dashboard Screen
     def display_app(self):
         self.appname.setText(self.applist.currentItem().text())
 
-
+    #Welcome Message
+    #Username Display
 
 
 
@@ -164,11 +204,12 @@ class DashboardScreen(QDialog): # Dashboard Screen
     def logoutfunction(self): #[WIP]
         login = LoginScreen()
         widget.addWidget(login)
-        widget.setCurrentIndex(widget.currentIndex() - 1)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
 
 
 app = QApplication(sys.argv)
-mainwindow = DashboardScreen()
+mainwindow = LoginScreen()
 widget = QtWidgets.QStackedWidget()
 widget = QtWidgets.QStackedWidget()
 widget.addWidget(mainwindow)

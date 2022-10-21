@@ -241,10 +241,10 @@
    <widget class="QPushButton" name="returnbtn">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>36</y>
-      <width>110</width>
-      <height>40</height>
+      <x>505</x>
+      <y>60</y>
+      <width>50</width>
+      <height>50</height>
      </rect>
     </property>
     <property name="font">
@@ -254,10 +254,20 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">#back{border-radius: 25px}</string>
+     <string notr="true">#returnbtn{border-radius: 25px; background-color: #00000000;}</string>
     </property>
     <property name="text">
-     <string>Return</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="Resources.qrc">
+      <normaloff>:/Icons/Resources/return_icon.png</normaloff>:/Icons/Resources/return_icon.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>35</width>
+      <height>35</height>
+     </size>
     </property>
    </widget>
    <zorder>bg</zorder>

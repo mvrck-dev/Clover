@@ -7,5 +7,6 @@
         <file>Resources/logout_icon.png</file>
         <file>Resources/add_icon.png</file>
         <file>Resources/remove_icon.png</file>
+        <file>Resources/return_icon.png</file>
     </qresource>
 </RCC>
