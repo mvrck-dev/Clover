@@ -51,6 +51,9 @@
     <property name="acceptDrops">
      <bool>false</bool>
     </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
     <property name="styleSheet">
      <string notr="true">#usrnmfield{border-radius: 12.5px; font-family: &quot;ITC Avant garde Gothic STD&quot;; font-size:5em}</string>
     </property>
@@ -91,6 +94,9 @@
     </property>
     <property name="styleSheet">
      <string notr="true">#emailfield{border-radius: 12.5px;}</string>
+    </property>
+    <property name="inputMethodHints">
+     <set>Qt::ImhEmailCharactersOnly</set>
     </property>
     <property name="maxLength">
      <number>50</number>

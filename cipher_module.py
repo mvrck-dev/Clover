@@ -8,23 +8,23 @@ import random
 
 
 #CIPHER ENCRYPTION : To generate a unique Salt for encryption
-alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+characters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '!', '_']
 def caesar_encrypt(plain_text, shift_key):
   cipher_text = ""
   for letter in plain_text:
-    position = alphabet.index(letter)
+    position = characters.index(letter)
     new_position = position + shift_key
-    cipher_text += alphabet[new_position]
-  # print(f"The encoded text is {cipher_text}") #Testing
+    cipher_text += characters[new_position]
+  # print(f"The encoded text is {cipher_text}") #Testing``
   return cipher_text
 
 
 def caesar_decrypt(cipher_text, shift_key):
   plain_text = ""
   for letter in cipher_text:
-    position = alphabet.index(letter)
+    position = characters.index(letter)
     new_position = position - shift_key
-    plain_text += alphabet[new_position]
+    plain_text += characters[new_position]
   # print(f"The decoded text is {plain_text}")  #Testing
   return plain_text
 

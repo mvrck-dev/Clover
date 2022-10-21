@@ -8,16 +8,16 @@ from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6 import QtWidgets
 import mysql.connector as dbcn
-from hash_engine import hash
-import time
+import cipher_module
+
 
 
 activedb = dbcn.connect(host = "localhost", user = "root", password= "destiny012", database = "Vault8")
-cur = activedb.cursor()
+cur = activedb.cursor(buffered=True)
 
 
 
-class LoginScreen(QDialog): # Login Screen
+class LoginScreen(QDialog): # Login Screen #FINAL NO CHANGES NEEDED NOW!
     def __init__(self):
         super(LoginScreen, self).__init__()
         label = QLabel(self)
@@ -28,24 +28,31 @@ class LoginScreen(QDialog): # Login Screen
 
         self.loginbutton.clicked.connect(self.loginfunction)
         self.signupbutton.clicked.connect(self.gotocreate)
-        
 
-    def loginfunction(self): # This is the login function [Done!]
+    def loginfunction(self): 
         user = self.usrnmfield.text()
         password = self.pwdfield.text()
+        cur.execute("SELECT * FROM master_login_db WHERE username = %s AND password = %s", (user, password))
 
         if len(user) == 0 or len(password) == 0:
             self.alertbox.setText("Please Input all Fields!")
+            timer.singleShot(3000, self.clear_alertbox)
         else:
-            hashed_pwd = hash(password)
-            cur.execute(f"SELECT password FROM master_login_db WHERE username = '{user}'")
+            cur.execute(f"SELECT special_key FROM master_login_db WHERE username = '{user}' or email = '{user}'")
+            special_key = cur.fetchone()
+            hashed_pwd = cipher_module.hash(password, special_key[0])
+            cur.execute(f"SELECT password FROM master_login_db WHERE username = '{user}' or email = '{user}'")
             result = cur.fetchall()
             if len(result) == 0:
-                self.alertbox.setText("Invalid Username!")
+                self.alertbox.setText("Invalid Username or Email!")
+                timer.singleShot(3000, self.clear_alertbox)
             elif hashed_pwd == result[0][0]:
+                self.alertbox.setText("Authenticated!\nPress Login again to continue.")
+                timer.singleShot(5000, self.clear_alertbox)
                 self.loginbutton.clicked.connect(self.gotodashboard)
             else:
                 self.alertbox.setText("Invalid Password!")
+                timer.singleShot(3000, self.clear_alertbox)
 
 
     def gotocreate(self): #[WIP]
@@ -58,8 +65,12 @@ class LoginScreen(QDialog): # Login Screen
         widget.addWidget(dashboard)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
+    def clear_alertbox(self):
+        self.alertbox.setText("")
+        self.alertbox.setStyleSheet("background-color: #00000000; color: #00000000;")
 
-class SignUpScreen(QDialog): # Sign Up Screen
+
+class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSUE and EMAIL VALIDATION
     def __init__(self):
         super(SignUpScreen, self).__init__()
         label = QLabel(self)
@@ -80,29 +91,41 @@ class SignUpScreen(QDialog): # Sign Up Screen
         password = self.pwdfield.text()
         password_b = self.cnfpwdfield.text()
 
+        cur.execute(f"SELECT count(username) FROM master_login_db WHERE username = '{user}'")
+        checkUser = cur.fetchall()
+
         if len(user)==0 or len(password)==0 or len(email)==0 or len(password_b)==0:
             self.alertbox.setText("Please input all fields.")
+            timer.singleShot(3000, self.clear_alertbox)
 
         elif password != password_b:
             self.alertbox.setText("Passwords do not match, Try Again!")
+            timer.singleShot(3000, self.clear_alertbox)
+        elif len(password) < 8:
+            self.alertbox.setText("Password must be atleast 8 characters long!")
+            timer.singleShot(3000, self.clear_alertbox)
+        elif checkUser == [(1,)]:
+            self.alertbox.setText("Username already exists! Try another one.")
+            timer.singleShot(3000, self.clear_alertbox)
         else:
             user_db = user + "_appdb"
-            hashed_pwd = hash(password)
+            salt = cipher_module.caesar_encrypt(user, 8)
+            hashed_pwd = cipher_module.hash(password, salt)
             self.alertbox.setText(f"{user_db}, {email}, {password}, {password_b}, {hashed_pwd}") #testing
-            cur.execute(f"CREATE TABLE if not exists {user_db}(username varchar(20) NOT NULL, appname varchar(20) NOT NULL, app_password varchar(1000) NOT NULL);")
-            cur.execute(f"INSERT INTO master_login_db (username, email, password) VALUES ('{user}', '{email}', '{hashed_pwd}')")
+            cur.execute(f"CREATE TABLE if not exists {user_db}(email varchar(50), appname varchar(20) NOT NULL, app_password varchar(100) NOT NULL);")
+            cur.execute(f"INSERT INTO master_login_db(username, email, password, special_key) VALUES('{user}','{email}', '{hashed_pwd}', '{salt}')")
             activedb.commit()
-            # timer.singleShot(3000, self.clear_alertbox)
-            dashboard = DashboardScreen()
-            widget.addWidget(dashboard)
-            widget.setCurrentIndex(widget.currentIndex() + 1)
+            self.alertbox.setText("Account Created Successfully!\nRedirecting to Login Screen...")
+            timer.singleShot(2200, self.gotologin)
 
-
-
-    def gotologin(self): #[WIP]
+    def gotologin(self):
         login = LoginScreen()
         widget.addWidget(login)
         widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def clear_alertbox(self):
+        self.alertbox.setText("")
+        self.alertbox.setStyleSheet("background-color: #00000000; color: #00000000;")
 
 
 
@@ -145,6 +168,10 @@ class DashboardScreen(QDialog): # Dashboard Screen
         self.generatepwd.clicked.connect(self.generate_password) #Generate Password Function
         self.copypwd.clicked.connect(self.CtCpwd) #Copy to Clipboard Function
 
+
+
+        #Load App List
+
     #Add items to list
     def add_app(self):
         if len(self.appfield.text()) == 0:
@@ -167,7 +194,9 @@ class DashboardScreen(QDialog): # Dashboard Screen
         else:
             app_name = self.applist.currentItem().text()
             #Generate Password
-
+            app_password = cipher_module.pwd_generator()
+            #Add to DB
+            # cur.execute(f"INSERT INTO {active_user}_appdb (username, appname, app_password) VALUES ('{active_user}', '{app_name}', '{app_password}')")
             self.alertbox.setText("Password Generated!")    
 
     def CtCpwd(self):
@@ -178,7 +207,11 @@ class DashboardScreen(QDialog): # Dashboard Screen
         else:
             app_name = self.applist.currentItem().text()
             #Copy to Clipboard
-
+            cb = QApplication.clipboard()
+            cb.clear(mode=cb.Clipboard)
+            # cur.execute(f"SELECT app_password FROM {active_user}_appdb WHERE appname = '{app_name}'")
+            # app_password = cur.fetchone()[0]
+            # cb.setText(app_password, mode=cb.Clipboard)
             self.alertbox.setText("Password Copied to Clipboard!")
 
     #Remove items from list
@@ -189,11 +222,6 @@ class DashboardScreen(QDialog): # Dashboard Screen
     #Display App Data
     def display_app(self):
         self.appname.setText(self.applist.currentItem().text())
-
-    #Welcome Message
-    #Username Display
-
-
 
     #Clear Alert Box
     def clear_alertbox(self):

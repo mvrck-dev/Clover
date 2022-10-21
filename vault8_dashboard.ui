@@ -70,7 +70,7 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="wlcmsg">
+   <widget class="QLabel" name="usrnm">
     <property name="geometry">
      <rect>
       <x>21</x>
@@ -83,14 +83,14 @@
      <string notr="true">#wlcmsg{color: #0F462D; font-size: 30px; font-weight: 150;}</string>
     </property>
     <property name="text">
-     <string>wlcmsg</string>
+     <string>usrnm</string>
     </property>
    </widget>
-   <widget class="QLabel" name="usrnm">
+   <widget class="QLabel" name="dashboard_text">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>70</y>
+      <y>71</y>
       <width>501</width>
       <height>51</height>
      </rect>
@@ -99,7 +99,7 @@
      <string notr="true">#usrnm{color: #0F462D; font-size: 48px; font-weight: 500;}</string>
     </property>
     <property name="text">
-     <string>username</string>
+     <string>dashboard</string>
     </property>
    </widget>
    <widget class="QLabel" name="pwdlabel">
@@ -254,9 +254,9 @@
    <widget class="QLabel" name="alertbox">
     <property name="geometry">
      <rect>
-      <x>566</x>
-      <y>480</y>
-      <width>250</width>
+      <x>530</x>
+      <y>500</y>
+      <width>322</width>
       <height>30</height>
      </rect>
     </property>
