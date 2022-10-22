@@ -7,8 +7,10 @@ from PyQt6.QtGui import QIcon, QPixmap, QFont, QFontDatabase
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6 import QtWidgets
+import re
 import mysql.connector as dbcn
 import cipher_module
+
 
 
 
@@ -17,7 +19,7 @@ cur = activedb.cursor(buffered=True)
 
 
 
-class LoginScreen(QDialog): # Login Screen #MIGRATE THE USER TO THE DASHBOARD
+class LoginScreen(QDialog): # Login Screen #AES DECRYPTION
     def __init__(self):
         super(LoginScreen, self).__init__()
         label = QLabel(self)
@@ -71,8 +73,8 @@ class LoginScreen(QDialog): # Login Screen #MIGRATE THE USER TO THE DASHBOARD
         self.alertbox.setStyleSheet("background-color: #00000000; color: #00000000;")
 
 
-
-class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSUE and EMAIL VALIDATION
+#THERE ARE STILL BUS IN THE FLOW OF THE CODE OF THIS MF! I NEED TO FIX IT ASAP!
+class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSUE and password strength checker and aes encrption
     def __init__(self):
         super(SignUpScreen, self).__init__()
         label = QLabel(self)
@@ -97,19 +99,28 @@ class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSU
         cur.execute(f"SELECT count(username) FROM master_login_db WHERE username = '{user}'")
         checkUser = cur.fetchall()
 
+        regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+
         if len(user)==0 or len(password)==0 or len(email)==0 or len(password_b)==0:
             self.alertbox.setText("Please input all fields.")
+            timer.singleShot(3000, self.clear_alertbox)
+
+        elif (re.fullmatch(regex, email)) == None:
+            self.alertbox.setText("Please input a valid email.")
             timer.singleShot(3000, self.clear_alertbox)
 
         elif password != password_b:
             self.alertbox.setText("Passwords do not match, Try Again!")
             timer.singleShot(3000, self.clear_alertbox)
+            
         elif len(password) < 8:
             self.alertbox.setText("Password must be atleast 8 characters long!")
             timer.singleShot(3000, self.clear_alertbox)
+
         elif checkUser == [(1,)]:
             self.alertbox.setText("Username already exists! Try another one.")
             timer.singleShot(3000, self.clear_alertbox)
+
         else:
             user_db = user + "_appdb"
             salt = cipher_module.caesar_encrypt(user, 8)
