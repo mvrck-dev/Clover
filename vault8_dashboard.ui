@@ -80,7 +80,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">#wlcmsg{color: #0F462D; font-size: 30px; font-weight: 150;}</string>
+     <string notr="true">#usrnm{color: #0F462D; font-size: 30px; font-weight: 150;}</string>
     </property>
     <property name="text">
      <string>usrnm</string>
@@ -96,7 +96,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">#usrnm{color: #0F462D; font-size: 48px; font-weight: 500;}</string>
+     <string notr="true">#dashboard_text{color: #0F462D; font-size: 48px; font-weight: 500;}</string>
     </property>
     <property name="text">
      <string>dashboard</string>
