@@ -17,7 +17,7 @@ cur = activedb.cursor(buffered=True)
 
 
 
-class LoginScreen(QDialog): # Login Screen #FINAL NO CHANGES NEEDED NOW!
+class LoginScreen(QDialog): # Login Screen #MIGRATE THE USER TO THE DASHBOARD
     def __init__(self):
         super(LoginScreen, self).__init__()
         label = QLabel(self)
@@ -29,7 +29,8 @@ class LoginScreen(QDialog): # Login Screen #FINAL NO CHANGES NEEDED NOW!
         self.loginbutton.clicked.connect(self.loginfunction)
         self.signupbutton.clicked.connect(self.gotocreate)
 
-    def loginfunction(self): 
+    def loginfunction(self):
+        global user #global variable for the user
         user = self.usrnmfield.text()
         password = self.pwdfield.text()
         cur.execute("SELECT * FROM master_login_db WHERE username = %s AND password = %s", (user, password))
@@ -70,6 +71,7 @@ class LoginScreen(QDialog): # Login Screen #FINAL NO CHANGES NEEDED NOW!
         self.alertbox.setStyleSheet("background-color: #00000000; color: #00000000;")
 
 
+
 class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSUE and EMAIL VALIDATION
     def __init__(self):
         super(SignUpScreen, self).__init__()
@@ -84,6 +86,7 @@ class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSU
         #Assiging Functions to buttons
         self.returnbtn.clicked.connect(self.gotologin)
         self.signupbutton.clicked.connect(self.SignUpFunction)
+
 
     def SignUpFunction(self): # This is the sign up function [WIP!]
         user = self.usrnmfield.text()
@@ -132,25 +135,7 @@ class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSU
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class DashboardScreen(QDialog): # Dashboard Screen
+class DashboardScreen(QDialog): # Dashboard Screen | FETCH THE USERNAME AND ADD DATABASE TO LIST
     def __init__(self):
         super(DashboardScreen, self).__init__()
         
@@ -168,9 +153,11 @@ class DashboardScreen(QDialog): # Dashboard Screen
         self.generatepwd.clicked.connect(self.generate_password) #Generate Password Function
         self.copypwd.clicked.connect(self.CtCpwd) #Copy to Clipboard Function
 
+        
+        global active_user
+        active_user = user
+        self.usrnm.setText(active_user)
 
-
-        #Load App List
 
     #Add items to list
     def add_app(self):
@@ -196,7 +183,7 @@ class DashboardScreen(QDialog): # Dashboard Screen
             #Generate Password
             app_password = cipher_module.pwd_generator()
             #Add to DB
-            # cur.execute(f"INSERT INTO {active_user}_appdb (username, appname, app_password) VALUES ('{active_user}', '{app_name}', '{app_password}')")
+            cur.execute(f"INSERT INTO {active_user}_appdb (appname, app_password) VALUES ('{app_name}', '{app_password}')")
             self.alertbox.setText("Password Generated!")    
 
     def CtCpwd(self):
@@ -206,18 +193,21 @@ class DashboardScreen(QDialog): # Dashboard Screen
             timer.singleShot(3000, self.clear_alertbox)
         else:
             app_name = self.applist.currentItem().text()
+            
             #Copy to Clipboard
             cb = QApplication.clipboard()
-            cb.clear(mode=cb.Clipboard)
-            # cur.execute(f"SELECT app_password FROM {active_user}_appdb WHERE appname = '{app_name}'")
-            # app_password = cur.fetchone()[0]
-            # cb.setText(app_password, mode=cb.Clipboard)
+            cb.clear(mode=cb.ownsClipboard)
+            cur.execute(f"SELECT app_password FROM {active_user}_appdb WHERE appname = '{app_name}'")
+            app_password = cur.fetchone()[0]
+            cb.setText(app_password, mode=cb.Clipboard)
             self.alertbox.setText("Password Copied to Clipboard!")
 
     #Remove items from list
     def remove_app(self):
-        self.applist.takeItem(self.applist.currentRow())
+        app_name = self.applist.currentRow().text()
+        self.applist.takeItem(app_name)
         self.appname.setText("")
+        cur.execute(f"DELETE FROM {active_user}_appdb WHERE appname = '{app_name}'")
 
     #Display App Data
     def display_app(self):
