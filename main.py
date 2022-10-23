@@ -36,26 +36,24 @@ class LoginScreen(QDialog): # Login Screen #AES DECRYPTION
         user = self.usrnmfield.text()
         password = self.pwdfield.text()
         cur.execute("SELECT * FROM master_login_db WHERE username = %s AND password = %s", (user, password))
-
+        result = cur.fetchall()
         if len(user) == 0 or len(password) == 0:
             self.alertbox.setText("Please Input all Fields!")
             timer.singleShot(3000, self.clear_alertbox)
+        elif len(result) == 0:
+                self.alertbox.setText("Invalid Username or Email!")
+                timer.singleShot(3000, self.clear_alertbox)
         else:
             cur.execute(f"SELECT special_key FROM master_login_db WHERE username = '{user}' or email = '{user}'")
             special_key = cur.fetchone()
             hashed_pwd = cipher_module.hash(password, special_key[0])
-            cur.execute(f"SELECT password FROM master_login_db WHERE username = '{user}' or email = '{user}'")
-            result = cur.fetchall()
-            if len(result) == 0:
-                self.alertbox.setText("Invalid Username or Email!")
+            if hashed_pwd != result[0][0]:
+                self.alertbox.setText("Invalid Password!")
                 timer.singleShot(3000, self.clear_alertbox)
             elif hashed_pwd == result[0][0]:
                 self.alertbox.setText("Authenticated!\nPress Login again to continue.")
                 timer.singleShot(5000, self.clear_alertbox)
-                self.loginbutton.clicked.connect(self.gotodashboard)
-            else:
-                self.alertbox.setText("Invalid Password!")
-                timer.singleShot(3000, self.clear_alertbox)
+            self.loginbutton.clicked.connect(self.gotodashboard)
 
 
     def gotocreate(self): #[WIP]
