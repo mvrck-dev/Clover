@@ -36,25 +36,26 @@ class LoginScreen(QDialog): # Login Screen #AES DECRYPTION
         user = self.usrnmfield.text()
         password = self.pwdfield.text()
         cur.execute("SELECT * FROM master_login_db WHERE username = %s AND password = %s", (user, password))
-        result = cur.fetchall()
+
         if len(user) == 0 or len(password) == 0:
             self.alertbox.setText("Please Input all Fields!")
             timer.singleShot(3000, self.clear_alertbox)
-        elif len(result) == 0:
-                self.alertbox.setText("Invalid Username or Email!")
-                timer.singleShot(3000, self.clear_alertbox)
         else:
             cur.execute(f"SELECT special_key FROM master_login_db WHERE username = '{user}' or email = '{user}'")
             special_key = cur.fetchone()
             hashed_pwd = cipher_module.hash(password, special_key[0])
-            if hashed_pwd != result[0][0]:
-                self.alertbox.setText("Invalid Password!")
+            cur.execute(f"SELECT password FROM master_login_db WHERE username = '{user}' or email = '{user}'")
+            result = cur.fetchall()
+            if len(result) == 0:
+                self.alertbox.setText("Invalid Username or Email!")
                 timer.singleShot(3000, self.clear_alertbox)
             elif hashed_pwd == result[0][0]:
                 self.alertbox.setText("Authenticated!\nPress Login again to continue.")
                 timer.singleShot(5000, self.clear_alertbox)
-            self.loginbutton.clicked.connect(self.gotodashboard)
-
+                self.loginbutton.clicked.connect(self.gotodashboard)
+            else:
+                self.alertbox.setText("Invalid Password!")
+                timer.singleShot(3000, self.clear_alertbox)
 
     def gotocreate(self): #[WIP]
         signup = SignUpScreen()
@@ -141,13 +142,9 @@ class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSU
 
 
 
-
-
-
-class DashboardScreen(QDialog): # Dashboard Screen | FETCH THE USERNAME AND ADD DATABASE TO LIST
+class DashboardScreen(QDialog): # Dashboard Screen | AND ADD DATABASE TO LIST
     def __init__(self):
         super(DashboardScreen, self).__init__()
-        
         loadUi("vault8_dashboard.ui",self)
         # Load Button Icons
         self.logoutbtn.setIcon(QIcon("Resources/logout_icon.png"))
@@ -167,17 +164,32 @@ class DashboardScreen(QDialog): # Dashboard Screen | FETCH THE USERNAME AND ADD 
         active_user = user
         self.usrnm.setText(active_user)
 
-
+        #Load App List
+        self.applist.clear()
+        cur.execute(f"SELECT appname FROM {active_user}_appdb")
+        app_list = cur.fetchall()
+        for app in app_list:
+            self.applist.addItem(app[0])
+        
     #Add items to list
     def add_app(self):
         if len(self.appfield.text()) == 0:
             self.alertbox.setText("Please input an app name!")
             self.alertbox.setStyleSheet("background-color: #ff4747; color: #ffffff;border: 0.1px; border-radius:16px;")
             timer.singleShot(3000, self.clear_alertbox)
+        elif len(self.emailfield.text()) == 0:
+            self.alertbox.setText("Please input an email!")
+            self.alertbox.setStyleSheet("background-color: #ff4747; color: #ffffff;border: 0.1px; border-radius:16px;")
+            timer.singleShot(3000, self.clear_alertbox)
         else:
             app_name = self.appfield.text()
             self.applist.addItem(app_name)
+            app_email = self.emailfield.text()
+            app_password = cipher_module.pwd_generator()
+            cur.execute(f"INSERT INTO {active_user}_appdb(appname, email, app_password) VALUES('{app_name}', '{app_email}', '{app_password}')")
+            activedb.commit()
             self.appfield.setText("")
+            self.emailfield.setText("")
             self.alertbox.setText("App Added!")
             self.alertbox.setStyleSheet("background-color: #E4FFDF; color: #0F462D; border-radius:16px")
             timer.singleShot(3000, self.clear_alertbox)
@@ -192,8 +204,9 @@ class DashboardScreen(QDialog): # Dashboard Screen | FETCH THE USERNAME AND ADD 
             #Generate Password
             app_password = cipher_module.pwd_generator()
             #Add to DB
-            cur.execute(f"INSERT INTO {active_user}_appdb (appname, app_password) VALUES ('{app_name}', '{app_password}')")
-            self.alertbox.setText("Password Generated!")    
+            cur.execute(f"UPDATE {active_user}_appdb SET app_password = '{app_password}' WHERE appname = '{app_name}'")
+            activedb.commit()
+            self.alertbox.setText("Password Generated and Copied!")    
 
     def CtCpwd(self):
         if self.applist.currentItem() == None:
@@ -204,19 +217,30 @@ class DashboardScreen(QDialog): # Dashboard Screen | FETCH THE USERNAME AND ADD 
             app_name = self.applist.currentItem().text()
             
             #Copy to Clipboard
-            cb = QApplication.clipboard()
-            cb.clear(mode=cb.ownsClipboard)
+            cb = QApplication.clipboard().text()
+            # cb.clear(mode=cb.ownsClipboard)
             cur.execute(f"SELECT app_password FROM {active_user}_appdb WHERE appname = '{app_name}'")
+            activedb.commit()
+            void = ''
+            cb.setText(void, mode=cb.Clipboard)
             app_password = cur.fetchone()[0]
             cb.setText(app_password, mode=cb.Clipboard)
             self.alertbox.setText("Password Copied to Clipboard!")
 
     #Remove items from list
-    def remove_app(self):
-        app_name = self.applist.currentRow().text()
-        self.applist.takeItem(app_name)
-        self.appname.setText("")
-        cur.execute(f"DELETE FROM {active_user}_appdb WHERE appname = '{app_name}'")
+    def remove_app(self): #DONE
+        if self.applist.currentItem() == None:
+            self.alertbox.setText("Please select an app!")
+            self.alertbox.setStyleSheet("background-color: #ff4747; color: #ffffff;border: 0.1px; border-radius:16px;")
+            timer.singleShot(3000, self.clear_alertbox)
+        else:
+            app_name = self.applist.currentRow()
+            app_item = self.applist.currentItem().text()
+            self.applist.takeItem(app_name)
+            self.appname.setText("")
+            cur.execute(f"DELETE FROM {active_user}_appdb WHERE appname = '{app_item}'")
+            activedb.commit()
+            self.alertbox.setText("App Removed!")
 
     #Display App Data
     def display_app(self):
