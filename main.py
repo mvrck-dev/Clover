@@ -276,6 +276,9 @@ widget.setFixedHeight(530)
 widget.setFixedWidth(850)
 widget.show()
 #Styles for Alert Box
+QFontDatabase.addApplicationFont("rsrc/ITC-AvantGardeSTD.ttf")
+stylesheet = open('rsrc/vault8_styles.qss').read()
+app.setStyleSheet(stylesheet)
 alert = "background-color: #ff4747; color: #ffffff;border: 0.1px; border-radius:16px;"
 success = "background-color: #E4FFDF; color: #0F462D; border-radius:16px"
 
