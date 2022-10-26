@@ -1,24 +1,53 @@
-import cipher_module
+from cgitb import text
+import sys
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
+from PyQt6.QtWidgets import *
 
-# text_in = input("Enter username to encrypt: ")
-# shift = 23
+class Example(QWidget):
+   def __init__(self):
+      super(Example, self).__init__()
 
-# cipher_text = cipher_module.caesar_encrypt(text_in, shift)
-# print(f"The encoded text is {cipher_text}")
+      self.initUI()
 
-# usr_pwd = input("Enter password: ")
+   def initUI(self):
+      hbox = QVBoxLayout()
+      self.edit1=QTextEdit()
+      hbox.addWidget(self.edit1)
+      self.btn1=QPushButton("Copy")
+      hbox.addWidget(self.btn1)
+      self.edit2=QTextEdit()
+      self.btn2=QPushButton("Paste")
+      hbox.addWidget(self.edit2)
+      hbox.addWidget(self.btn2)
+      self.btn1.clicked.connect(self.copytext)
+      self.btn2.clicked.connect(self.pastetext)
+      self.setLayout(hbox)
+      
+      self.setGeometry(300, 300, 300, 200)
+      self.setWindowTitle('Clipboard')
+      self.show()
+      
+   def copytext(self):
 
-# key = cipher_module.hash(usr_pwd, cipher_text) #Key
-# print(key)
-# #HKey
+      #clipboard.setText(self.edit1.copy())
+      
+      text = self.edit1.toPlainText()
+      #copy the test in the edit1 to the clipboard
+      clipboard.setText(text)
+      
+      print (clipboard.text())
 
-# appname = input("Enter app name: ")
-# app_password = input("Enter app password: ")
- 
-# cipher_pwd = cipher_module.aes_encrypt(key, appname, app_password)
-# print(f"Cipher Pwd{cipher_pwd}")
+      msg=QMessageBox()
+      msg.setText(clipboard.text()+" copied on clipboard")
+      msg.exec()
 
-# decrypted_pwd = cipher_module.aes_decrypt(key, appname, cipher_pwd)
-# print(f"Deciphered Pwd{decrypted_pwd}")
+   def pastetext(self):
+      self.edit2.setText(clipboard.text())
 
-print(cipher_module.pwd_generator())
+app = QApplication(sys.argv)
+clipboard=app.clipboard()
+ex = Example()
+ex.setWindowTitle("clipboard Example")
+sys.exit(app.exec())
+

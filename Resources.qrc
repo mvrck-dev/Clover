@@ -1,12 +1,12 @@
 <RCC>
     <qresource prefix="/Images">
-        <file>Resources/vault8_login_wrapper_v0.1.png</file>
-        <file>Resources/vault8_login_wrapper.png</file>
+        <file>rsrc/vault8_login_wrapper_v0.1.png</file>
+        <file>rsrc/vault8_login_wrapper.png</file>
     </qresource>
     <qresource prefix="/Icons">
-        <file>Resources/logout_icon.png</file>
-        <file>Resources/add_icon.png</file>
-        <file>Resources/remove_icon.png</file>
-        <file>Resources/return_icon.png</file>
+        <file>rsrc/logout_icon.png</file>
+        <file>rsrc/add_icon.png</file>
+        <file>rsrc/remove_icon.png</file>
+        <file>rsrc/return_icon.png</file>
     </qresource>
 </RCC>

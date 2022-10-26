@@ -178,7 +178,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="Resources.qrc">:/Images/Resources/vault8_login_wrapper_v0.1.png</pixmap>
+     <pixmap resource="Resources.qrc">:/Images/rsrc/vault8_login_wrapper_v0.1.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
