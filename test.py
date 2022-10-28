@@ -1,53 +1,39 @@
-from cgitb import text
-import sys
-from PyQt6.QtCore import *
-from PyQt6.QtGui import *
-from PyQt6.QtWidgets import *
+# from PyQt6.QtWidgets import QApplication, QWidget, QLabel
+# from PyQt6.QtGui import QFont, QFontDatabase
+# import sys, os
+ 
+# class Window(QWidget):
+#     def __init__(self):
+#         super().__init__()
+#         self.resize(600, 300)
+#         self.setWindowTitle("CodersLegacy")
+#         self.setContentsMargins(20, 20, 20, 20)
 
-class Example(QWidget):
-   def __init__(self):
-      super(Example, self).__init__()
+#         ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '.'))
+#         print(ROOT_DIR)
+#         ffl = os.path.join(ROOT_DIR, 'rsrc', 'ITCAvantGardeStd.ttf')
+#         id = QFontDatabase.addApplicationFont(ffl)
+#         if id == -1:
+#             print("font not found", id)
+#         else:
+#             print("font found", id)
+ 
+#         families = QFontDatabase.applicationFontFamilies(id)
+#         print(families[0])
+ 
+#         label = QLabel("Hello World", self)
+#         label.setFont(QFont(families[0], 80))
+#         label.move(50, 100)
+ 
+# app = QApplication(sys.argv)
+# window = Window()
+# window.show()
+# sys.exit(app.exec())
 
-      self.initUI()
 
-   def initUI(self):
-      hbox = QVBoxLayout()
-      self.edit1=QTextEdit()
-      hbox.addWidget(self.edit1)
-      self.btn1=QPushButton("Copy")
-      hbox.addWidget(self.btn1)
-      self.edit2=QTextEdit()
-      self.btn2=QPushButton("Paste")
-      hbox.addWidget(self.edit2)
-      hbox.addWidget(self.btn2)
-      self.btn1.clicked.connect(self.copytext)
-      self.btn2.clicked.connect(self.pastetext)
-      self.setLayout(hbox)
-      
-      self.setGeometry(300, 300, 300, 200)
-      self.setWindowTitle('Clipboard')
-      self.show()
-      
-   def copytext(self):
 
-      #clipboard.setText(self.edit1.copy())
-      
-      text = self.edit1.toPlainText()
-      #copy the test in the edit1 to the clipboard
-      clipboard.setText(text)
-      
-      print (clipboard.text())
-
-      msg=QMessageBox()
-      msg.setText(clipboard.text()+" copied on clipboard")
-      msg.exec()
-
-   def pastetext(self):
-      self.edit2.setText(clipboard.text())
-
-app = QApplication(sys.argv)
-clipboard=app.clipboard()
-ex = Example()
-ex.setWindowTitle("clipboard Example")
-sys.exit(app.exec())
-
+# # import os
+# # ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '.'))
+# # print(ROOT_DIR)
+# # file= os.path.join(ROOT_DIR, 'rsrc', 'ITCAvantGardeStd.ttf')
+# # print(file)

@@ -138,7 +138,7 @@
     </property>
     <property name="icon">
      <iconset resource="Resources.qrc">
-      <normaloff>:/Icons/Resources/logout_icon.png</normaloff>:/Icons/Resources/logout_icon.png</iconset>
+      <normaloff>:/Icons/rsrc/logout_icon.png</normaloff>:/Icons/rsrc/logout_icon.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -167,7 +167,7 @@
     </property>
     <property name="icon">
      <iconset resource="Resources.qrc">
-      <normaloff>:/Icons/Resources/add_icon.png</normaloff>:/Icons/Resources/add_icon.png</iconset>
+      <normaloff>:/Icons/rsrc/add_icon.png</normaloff>:/Icons/rsrc/add_icon.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -196,7 +196,7 @@
     </property>
     <property name="icon">
      <iconset resource="Resources.qrc">
-      <normaloff>:/Icons/Resources/remove_icon.png</normaloff>:/Icons/Resources/remove_icon.png</iconset>
+      <normaloff>:/Icons/rsrc/remove_icon.png</normaloff>:/Icons/rsrc/remove_icon.png</iconset>
     </property>
     <property name="iconSize">
      <size>

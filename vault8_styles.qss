@@ -1,0 +1,21 @@
+/* @font-face {
+    font-family: ITC Avant Garde;
+    src: url(rsrc/ITCAvantGardeBk.ttf);
+} */
+
+QLabel {
+    font-family: 'ITCAvantGardeBk';
+}
+ 
+/* #usrnmfield #emailfield #pwdfield #cnfpwdfield {
+    border-radius: 12.5px;
+    font-family: "ITC Avant garde Gothic STD";
+    font-size: 5em
+} */
+
+/* 
+#signupbutton {
+    border-radius: 12.5px;
+    font-family: "ITC Avant garde Gothic STD";
+    font-size: 5em
+}  */

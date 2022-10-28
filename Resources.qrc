@@ -9,4 +9,7 @@
         <file>rsrc/remove_icon.png</file>
         <file>rsrc/return_icon.png</file>
     </qresource>
+    <qresource prefix="/Fonts">
+        <file>rsrc/ITCAvantGardeStd.ttf</file>
+    </qresource>
 </RCC>

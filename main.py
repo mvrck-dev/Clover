@@ -1,6 +1,6 @@
 
 from random import randbytes, random
-import sys
+import sys ,os
 from PyQt6.uic import loadUi
 from PyQt6.QtWidgets import QApplication, QDialog, QLabel, QLineEdit, QWidget, QPushButton
 from PyQt6.QtGui import QIcon, QPixmap, QFont, QFontDatabase, QGuiApplication
@@ -19,7 +19,7 @@ cur = activedb.cursor(buffered=True)
 
 
 
-class LoginScreen(QDialog): # Login Screen #AES DECRYPTION
+class LoginScreen(QDialog): # Login Screen #AES DECRYPTION #Login Flow
     def __init__(self):
         super(LoginScreen, self).__init__()
         label = QLabel(self)
@@ -72,7 +72,7 @@ class LoginScreen(QDialog): # Login Screen #AES DECRYPTION
         self.alertbox.setStyleSheet("background-color: #00000000; color: #00000000;")
 
 
-#THERE ARE STILL BUS IN THE FLOW OF THE CODE OF THIS MF! I NEED TO FIX IT ASAP!
+#THERE ARE STILL BUGS IN THE FLOW OF THE CODE OF THIS MF! I NEED TO FIX IT ASAP!
 class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSUE and password strength checker and aes encrption
     def __init__(self):
         super(SignUpScreen, self).__init__()
@@ -149,6 +149,7 @@ class DashboardScreen(QDialog): # Dashboard Screen | AND ADD DATABASE TO LIST
         self.logoutbtn.setIcon(QIcon("rsrc/logout_icon.png"))
         self.addbtn.setIcon(QIcon("rsrc/add_icon.png"))
         self.removebtn.setIcon(QIcon("rsrc/remove_icon.png"))
+        QLabel.setStyleSheet(self, "background-color: #00000000; color: #00000000;")
 
         #Load Button Functions
         self.logoutbtn.clicked.connect(self.logoutfunction) #LogOut Function
@@ -267,6 +268,7 @@ class DashboardScreen(QDialog): # Dashboard Screen | AND ADD DATABASE TO LIST
 
 
 
+
 app = QApplication(sys.argv)
 mainwindow = LoginScreen()
 widget = QtWidgets.QStackedWidget()
@@ -275,17 +277,17 @@ widget.addWidget(mainwindow)
 widget.setFixedHeight(530)
 widget.setFixedWidth(850)
 widget.show()
-#Styles for Alert Box
-QFontDatabase.addApplicationFont("rsrc/ITC-AvantGardeSTD.ttf")
-stylesheet = open('rsrc/vault8_styles.qss').read()
-app.setStyleSheet(stylesheet)
+
 alert = "background-color: #ff4747; color: #ffffff;border: 0.1px; border-radius:16px;"
 success = "background-color: #E4FFDF; color: #0F462D; border-radius:16px"
-
-
-
-#Miscellaneous
 regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-
 timer = QTimer()
+
+
+QFontDatabase.addApplicationFont("rsrc/ITCAvantGardeBk.ttf")
+with open('styles.qss', 'r') as stlf:
+    style = stlf.read()
+    app.setStyleSheet(style)
+# stylesheet = open('rsrc/vault8_styles.qss').read()
+# app.setStyleSheet(stylesheet)
 sys.exit(app.exec())

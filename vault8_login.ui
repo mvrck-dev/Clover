@@ -40,19 +40,11 @@
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
-    <property name="font">
-     <font>
-      <family>ITC Avant garde Gothic STD</family>
-      <pointsize>20</pointsize>
-      <bold>true</bold>
-      <stylestrategy>PreferDefault</stylestrategy>
-     </font>
-    </property>
     <property name="acceptDrops">
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">#usrnmfield{border-radius: 12.5px; font-family: &quot;ITC Avant garde Gothic STD&quot;; font-size:5em}</string>
+     <string notr="true">#usrnmfield{border-radius: 12.5px; font-size:5em}</string>
     </property>
     <property name="maxLength">
      <number>20</number>
@@ -78,13 +70,6 @@
       <width>311</width>
       <height>51</height>
      </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>ITC Avant Garde Gothic Std</family>
-      <pointsize>20</pointsize>
-      <bold>true</bold>
-     </font>
     </property>
     <property name="acceptDrops">
      <bool>false</bool>
@@ -117,12 +102,6 @@
       <height>50</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <family>ITC Avant garde Gothic STD</family>
-      <bold>true</bold>
-     </font>
-    </property>
     <property name="styleSheet">
      <string notr="true"/>
     </property>
@@ -138,12 +117,6 @@
       <width>150</width>
       <height>50</height>
      </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>ITC Avant garde Gothic STD</family>
-      <bold>true</bold>
-     </font>
     </property>
     <property name="styleSheet">
      <string notr="true"/>
