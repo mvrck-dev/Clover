@@ -50,11 +50,7 @@
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">QLineEdit {
-    padding-left: 0.4em;
-    border-radius: 12.5px;
-    font-weight: 100;
-}</string>
+     <string notr="true"/>
     </property>
     <property name="maxLength">
      <number>20</number>
@@ -91,11 +87,7 @@
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">QLineEdit {
-    padding-left: 0.4em;
-    border-radius: 12.5px;
-    font-weight: 100;
-}</string>
+     <string notr="true"/>
     </property>
     <property name="maxLength">
      <number>20</number>

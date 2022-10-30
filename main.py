@@ -1,23 +1,17 @@
-
-from random import randbytes, random
 import sys ,os
 from PyQt6.uic import loadUi
-from PyQt6.QtWidgets import QApplication, QDialog, QLabel, QLineEdit, QWidget, QPushButton
-from PyQt6.QtGui import QIcon, QPixmap, QFont, QFontDatabase, QGuiApplication
+from PyQt6.QtWidgets import QApplication, QDialog, QLabel
+from PyQt6.QtGui import QIcon, QPixmap, QFont, QFontDatabase 
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6 import QtWidgets
 import re
 import mysql.connector as dbcn
 import cipher_module
-
-
-
+import vault8_stylesheets as styles
 
 activedb = dbcn.connect(host = "localhost", user = "root", password= "destiny012", database = "Vault8")
 cur = activedb.cursor(buffered=True)
-
-
 
 class LoginScreen(QDialog): # Login Screen #AES DECRYPTION #Login Flow
     def __init__(self):
@@ -30,6 +24,12 @@ class LoginScreen(QDialog): # Login Screen #AES DECRYPTION #Login Flow
 
         self.loginbutton.clicked.connect(self.loginfunction)
         self.signupbutton.clicked.connect(self.gotocreate)
+
+        #UI Styling
+        self.loginbutton.setStyleSheet(styles.button_style)
+        self.signupbutton.setStyleSheet(styles.button_style)
+        self.usrnmfield.setStyleSheet(styles.form_style)
+        self.pwdfield.setStyleSheet(styles.form_style)
 
     def loginfunction(self):
         global user #global variable for the user
@@ -81,14 +81,18 @@ class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSU
         label.setPixmap(pixmap)
         loadUi("vault8_signup.ui",self)
         
-        #Styling
-        self.returnbtn.setIcon(QIcon("rsrc/return_icon.png"))
-
         #Assiging Functions to buttons
         self.returnbtn.clicked.connect(self.gotologin)
         self.signupbutton.clicked.connect(self.SignUpFunction)
-
-
+        
+        #UI Styling
+        self.returnbtn.setIcon(QIcon("rsrc/return_icon.png"))
+        self.signupbutton.setStyleSheet(styles.button_style)
+        self.usrnmfield.setStyleSheet(styles.form_style)
+        self.pwdfield.setStyleSheet(styles.form_style)
+        self.emailfield.setStyleSheet(styles.form_style)
+        self.cnfpwdfield.setStyleSheet(styles.form_style)
+        
     def SignUpFunction(self): # This is the sign up function [WIP!]
         user = self.usrnmfield.text()
         email = self.emailfield.text()
@@ -97,7 +101,8 @@ class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSU
 
         cur.execute(f"SELECT count(username) FROM master_login_db WHERE username = '{user}'")
         checkUser = cur.fetchall()
-
+        cur.execute(f"SELECT count(email) FROM master_login_db WHERE email = '{email}'")
+        checkEmail = cur.fetchall()
 
         if len(user)==0 or len(password)==0 or len(email)==0 or len(password_b)==0:
             self.alertbox.setText("Please input all fields.")
@@ -117,6 +122,10 @@ class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSU
 
         elif checkUser == [(1,)]:
             self.alertbox.setText("Username already exists! Try another one.")
+            timer.singleShot(3000, self.clear_alertbox)
+        
+        elif checkEmail == [(1,)]:
+            self.alertbox.setText("Email already exists! Try another one.")
             timer.singleShot(3000, self.clear_alertbox)
 
         else:
@@ -149,16 +158,24 @@ class DashboardScreen(QDialog): # Dashboard Screen | AND ADD DATABASE TO LIST
         self.logoutbtn.setIcon(QIcon("rsrc/logout_icon.png"))
         self.addbtn.setIcon(QIcon("rsrc/add_icon.png"))
         self.removebtn.setIcon(QIcon("rsrc/remove_icon.png"))
-        QLabel.setStyleSheet(self, "background-color: #00000000; color: #00000000;")
 
         #Load Button Functions
         self.logoutbtn.clicked.connect(self.logoutfunction) #LogOut Function
         self.addbtn.clicked.connect(self.add_app) #Add App Function
         self.removebtn.clicked.connect(self.remove_app) #Remove App Function
-        self.applist.clicked.connect(self.display_app) #App Clicked Function
+        self.applist.clicked.connect(self.display_app) #App Display Function
         self.generatepwd.clicked.connect(self.generate_password) #Generate Password Function
         self.copypwd.clicked.connect(self.CtCpwd) #Copy to Clipboard Function
         
+        #UI Styling
+        self.cbody.setStyleSheet("background-color: #0c0d0c;")
+        self.usrnm.setStyleSheet("color: #0F462D; font-size: 30px; ")
+        self.applist.setStyleSheet(styles.list_style)
+
+        self.generatepwd.setStyleSheet(styles.button_style)
+        self.copypwd.setStyleSheet(styles.button_style)
+        
+
         global active_user
         active_user = user
         self.usrnm.setText(active_user)
@@ -174,15 +191,15 @@ class DashboardScreen(QDialog): # Dashboard Screen | AND ADD DATABASE TO LIST
     def add_app(self):
         if len(self.appfield.text()) == 0:
             self.alertbox.setText("Please input an app name!")
-            self.alertbox.setStyleSheet(alert)
+            self.alertbox.setStyleSheet(styles.alert)
             timer.singleShot(3000, self.clear_alertbox)
         elif len(self.emailfield.text()) == 0:
             self.alertbox.setText("Please input an email!")
-            self.alertbox.setStyleSheet(alert)
+            self.alertbox.setStyleSheet(styles.alert)
             timer.singleShot(3000, self.clear_alertbox)
         elif (re.fullmatch(regex, self.emailfield.text())) == None:
             self.alertbox.setText("Please input a valid email.")
-            self.alertbox.setStyleSheet(alert)
+            self.alertbox.setStyleSheet(styles.alert)
             timer.singleShot(3000, self.clear_alertbox)
         else:
             app_name = self.appfield.text()
@@ -194,13 +211,13 @@ class DashboardScreen(QDialog): # Dashboard Screen | AND ADD DATABASE TO LIST
             self.appfield.setText("")
             self.emailfield.setText("")
             self.alertbox.setText("App Added!")
-            self.alertbox.setStyleSheet(success)
+            self.alertbox.setStyleSheet(styles.success)
             timer.singleShot(3000, self.clear_alertbox)
 
     def generate_password(self):
         if self.applist.currentItem() == None:
             self.alertbox.setText("Please select an app!")
-            self.alertbox.setStyleSheet(alert)
+            self.alertbox.setStyleSheet(styles.alert)
             timer.singleShot(3000, self.clear_alertbox)
         else:
             app_name = self.applist.currentItem().text()
@@ -214,13 +231,13 @@ class DashboardScreen(QDialog): # Dashboard Screen | AND ADD DATABASE TO LIST
             cb.clear()
             cb.setText(app_password)
             self.alertbox.setText("Password Generated and Copied!")  
-            self.alertbox.setStyleSheet(success)
+            self.alertbox.setStyleSheet(styles.success)
             timer.singleShot(3000, self.clear_alertbox)
 
     def CtCpwd(self):
         if self.applist.currentItem() == None:
             self.alertbox.setText("Please select an app!")
-            self.alertbox.setStyleSheet(alert)
+            self.alertbox.setStyleSheet(styles.alert)
             timer.singleShot(3000, self.clear_alertbox)
         else:
             #Copy to Clipboard
@@ -231,13 +248,13 @@ class DashboardScreen(QDialog): # Dashboard Screen | AND ADD DATABASE TO LIST
             app_password = cur.fetchone()[0]
             cb.setText(app_password)
             self.alertbox.setText("Password Copied to Clipboard!")
-            self.alertbox.setStyleSheet(success)
+            self.alertbox.setStyleSheet(styles.success)
 
     #Remove items from list
     def remove_app(self): #DONE
         if self.applist.currentItem() == None:
             self.alertbox.setText("Please select an app!")
-            self.alertbox.setStyleSheet(alert)
+            self.alertbox.setStyleSheet(styles.alert)
             timer.singleShot(3000, self.clear_alertbox)
         else:
             app_name = self.applist.currentRow()
@@ -247,7 +264,7 @@ class DashboardScreen(QDialog): # Dashboard Screen | AND ADD DATABASE TO LIST
             cur.execute(f"DELETE FROM {active_user}_appdb WHERE appname = '{app_item}'")
             activedb.commit()
             self.alertbox.setText("App Removed!")
-            self.alertbox.setStyleSheet(success)
+            self.alertbox.setStyleSheet(styles.success)
 
     #Display App Data
     def display_app(self):
@@ -277,19 +294,16 @@ widget.addWidget(mainwindow)
 widget.setFixedHeight(530)
 widget.setFixedWidth(850)
 widget.show()
-#UI Styling
-# stylesheet = open('vault8_styles.qss').read()
-# app.setStyleSheet(stylesheet)
-#Loading Fonts
+
+#Font
 ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '.'))
-ffl = os.path.join(ROOT_DIR, 'rsrc', 'ProductSans.ttf')
+ffl = os.path.join(ROOT_DIR, 'rsrc', 'Inter.ttf')
 id = QFontDatabase.addApplicationFont(ffl)
 families = QFontDatabase.applicationFontFamilies(id)
 current_font = families[0]
 app.setFont(QFont(current_font, 10))
-alert = "background-color: #ff4747; color: #ffffff;border: 0.1px; border-radius:16px;"
-success = "background-color: #E4FFDF; color: #0F462D; border-radius:16px"
 #Misceallaneous
 regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 timer = QTimer()
+
 sys.exit(app.exec())

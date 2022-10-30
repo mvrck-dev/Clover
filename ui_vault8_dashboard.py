@@ -1,0 +1,162 @@
+# -*- coding: utf-8 -*-
+
+################################################################################
+## Form generated from reading UI file 'vault8_dashboard.ui'
+##
+## Created by: Qt User Interface Compiler version 6.3.1
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
+
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QApplication, QDialog, QLabel, QLineEdit,
+    QListWidget, QListWidgetItem, QPushButton, QSizePolicy,
+    QWidget)
+import Resources_rc
+
+class Ui_Dialog(object):
+    def setupUi(self, Dialog):
+        if not Dialog.objectName():
+            Dialog.setObjectName(u"Dialog")
+        Dialog.resize(850, 530)
+        self.DashboardScreen = QWidget(Dialog)
+        self.DashboardScreen.setObjectName(u"DashboardScreen")
+        self.DashboardScreen.setGeometry(QRect(0, 0, 850, 530))
+        self.DashboardScreen.setStyleSheet(u"#cbody{background-color:#000}")
+        self.header = QLabel(self.DashboardScreen)
+        self.header.setObjectName(u"header")
+        self.header.setGeometry(QRect(0, 0, 850, 150))
+        self.header.setStyleSheet(u"#header{background-color:#E4FFDF;}")
+        self.cbody = QLabel(self.DashboardScreen)
+        self.cbody.setObjectName(u"cbody")
+        self.cbody.setGeometry(QRect(0, 150, 530, 380))
+        self.sbody = QLabel(self.DashboardScreen)
+        self.sbody.setObjectName(u"sbody")
+        self.sbody.setGeometry(QRect(530, 150, 322, 380))
+        self.sbody.setStyleSheet(u"#sbody{background-color:#121212}")
+        self.usrnm = QLabel(self.DashboardScreen)
+        self.usrnm.setObjectName(u"usrnm")
+        self.usrnm.setGeometry(QRect(24, 40, 110, 41))
+        self.usrnm.setStyleSheet(u"#usrnm{color: #0F462D; font-size: 30px; font-weight: 150;}")
+        self.dashboard_text = QLabel(self.DashboardScreen)
+        self.dashboard_text.setObjectName(u"dashboard_text")
+        self.dashboard_text.setGeometry(QRect(20, 71, 501, 51))
+        self.dashboard_text.setStyleSheet(u"#dashboard_text{color: #0F462D; font-size: 48px; font-weight: 500;}")
+        self.pwdlabel = QLabel(self.DashboardScreen)
+        self.pwdlabel.setObjectName(u"pwdlabel")
+        self.pwdlabel.setGeometry(QRect(20, 170, 241, 51))
+        self.pwdlabel.setStyleSheet(u"#pwdlabel{color: #FFF; font-size: 48px; font-weight: 500;}")
+        self.logoutbtn = QPushButton(self.DashboardScreen)
+        self.logoutbtn.setObjectName(u"logoutbtn")
+        self.logoutbtn.setGeometry(QRect(750, 45, 64, 64))
+        self.logoutbtn.setStyleSheet(u"#logoutbtn{background-color: #00000000;}")
+        icon = QIcon()
+        icon.addFile(u":/Icons/rsrc/logout_icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.logoutbtn.setIcon(icon)
+        self.logoutbtn.setIconSize(QSize(40, 40))
+        self.addbtn = QPushButton(self.DashboardScreen)
+        self.addbtn.setObjectName(u"addbtn")
+        self.addbtn.setGeometry(QRect(311, 173, 131, 48))
+        self.addbtn.setStyleSheet(u"#addbtn{background-color: #00000000;}")
+        icon1 = QIcon()
+        icon1.addFile(u":/Icons/rsrc/add_icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.addbtn.setIcon(icon1)
+        self.addbtn.setIconSize(QSize(40, 40))
+        self.removebtn = QPushButton(self.DashboardScreen)
+        self.removebtn.setObjectName(u"removebtn")
+        self.removebtn.setGeometry(QRect(462, 173, 48, 48))
+        self.removebtn.setStyleSheet(u"#removebtn{background-color: #00000000;}")
+        icon2 = QIcon()
+        icon2.addFile(u":/Icons/rsrc/remove_icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.removebtn.setIcon(icon2)
+        self.removebtn.setIconSize(QSize(40, 40))
+        self.applist = QListWidget(self.DashboardScreen)
+        self.applist.setObjectName(u"applist")
+        self.applist.setGeometry(QRect(20, 239, 490, 271))
+        self.applist.setStyleSheet(u"")
+        self.appname = QLabel(self.DashboardScreen)
+        self.appname.setObjectName(u"appname")
+        self.appname.setGeometry(QRect(530, 247, 322, 46))
+        self.appname.setStyleSheet(u"#appname{background-color:#0F462D; color: #FFF; font-size: 48px; font-weight: 500; padding: 5px, 9px, 0 ,0; font-size:10px; }")
+        self.appfield = QLineEdit(self.DashboardScreen)
+        self.appfield.setObjectName(u"appfield")
+        self.appfield.setGeometry(QRect(530, 149, 322, 50))
+        self.appfield.setStyleSheet(u"#appfield{background-color:#9dcfa3\n"
+"; color: #FFF;font-size: 48px; font-weight: 200; font-size:25px; }")
+        self.alertbox = QLabel(self.DashboardScreen)
+        self.alertbox.setObjectName(u"alertbox")
+        self.alertbox.setGeometry(QRect(530, 500, 322, 30))
+        self.alertbox.setStyleSheet(u"#appname{background-color:#0F462D; color: #FFF; font-size: 48px; font-weight: 500; padding: 5px, 9px, 0 ,0; font-size:10px; }")
+        self.emailfield = QLineEdit(self.DashboardScreen)
+        self.emailfield.setObjectName(u"emailfield")
+        self.emailfield.setGeometry(QRect(530, 197, 322, 50))
+        self.emailfield.setStyleSheet(u"#emailfield{background-color:#9dcfa3\n"
+"; color: #FFF;font-size: 48px; font-weight: 200; font-size:25px; }")
+        self.generatepwd = QPushButton(self.DashboardScreen)
+        self.generatepwd.setObjectName(u"generatepwd")
+        self.generatepwd.setGeometry(QRect(574, 420, 235, 55))
+        self.emailid = QLabel(self.DashboardScreen)
+        self.emailid.setObjectName(u"emailid")
+        self.emailid.setGeometry(QRect(530, 294, 322, 46))
+        self.emailid.setStyleSheet(u"#emailid{background-color:#0F462D; color: #FFF; font-size: 48px; font-weight: 500; padding: 5px, 9px, 0 ,0; font-size:10px; }")
+        self.copypwd = QPushButton(self.DashboardScreen)
+        self.copypwd.setObjectName(u"copypwd")
+        self.copypwd.setGeometry(QRect(574, 360, 235, 55))
+        self.header.raise_()
+        self.cbody.raise_()
+        self.sbody.raise_()
+        self.usrnm.raise_()
+        self.dashboard_text.raise_()
+        self.pwdlabel.raise_()
+        self.logoutbtn.raise_()
+        self.addbtn.raise_()
+        self.removebtn.raise_()
+        self.appname.raise_()
+        self.appfield.raise_()
+        self.alertbox.raise_()
+        self.emailfield.raise_()
+        self.generatepwd.raise_()
+        self.emailid.raise_()
+        self.copypwd.raise_()
+        self.applist.raise_()
+
+        self.retranslateUi(Dialog)
+
+        QMetaObject.connectSlotsByName(Dialog)
+    # setupUi
+
+    def retranslateUi(self, Dialog):
+        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Vault8 | SignUp", None))
+        self.header.setText("")
+        self.cbody.setText("")
+        self.sbody.setText("")
+        self.usrnm.setText(QCoreApplication.translate("Dialog", u"usrnm", None))
+        self.dashboard_text.setText(QCoreApplication.translate("Dialog", u"dashboard", None))
+        self.pwdlabel.setText(QCoreApplication.translate("Dialog", u"Passwords", None))
+#if QT_CONFIG(whatsthis)
+        self.logoutbtn.setWhatsThis(QCoreApplication.translate("Dialog", u"Logout", None))
+#endif // QT_CONFIG(whatsthis)
+        self.logoutbtn.setText("")
+#if QT_CONFIG(whatsthis)
+        self.addbtn.setWhatsThis(QCoreApplication.translate("Dialog", u"Logout", None))
+#endif // QT_CONFIG(whatsthis)
+        self.addbtn.setText("")
+#if QT_CONFIG(whatsthis)
+        self.removebtn.setWhatsThis(QCoreApplication.translate("Dialog", u"Logout", None))
+#endif // QT_CONFIG(whatsthis)
+        self.removebtn.setText("")
+        self.appname.setText("")
+        self.appfield.setPlaceholderText(QCoreApplication.translate("Dialog", u"Enter App Name", None))
+        self.alertbox.setText("")
+        self.emailfield.setPlaceholderText(QCoreApplication.translate("Dialog", u"Enter Email ", None))
+        self.generatepwd.setText(QCoreApplication.translate("Dialog", u"Generate Password", None))
+        self.emailid.setText("")
+        self.copypwd.setText(QCoreApplication.translate("Dialog", u"Click to Copy Password", None))
+    # retranslateUi
+
