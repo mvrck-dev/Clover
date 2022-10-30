@@ -150,9 +150,9 @@
    <widget class="QPushButton" name="addbtn">
     <property name="geometry">
      <rect>
-      <x>394</x>
+      <x>311</x>
       <y>173</y>
-      <width>48</width>
+      <width>131</width>
       <height>48</height>
      </rect>
     </property>
@@ -209,9 +209,9 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>240</y>
+      <y>239</y>
       <width>490</width>
-      <height>270</height>
+      <height>271</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -288,7 +288,7 @@
     <property name="geometry">
      <rect>
       <x>574</x>
-      <y>352</y>
+      <y>420</y>
       <width>235</width>
       <height>55</height>
      </rect>
@@ -317,7 +317,7 @@
     <property name="geometry">
      <rect>
       <x>574</x>
-      <y>415</y>
+      <y>360</y>
       <width>235</width>
       <height>55</height>
      </rect>
@@ -326,6 +326,23 @@
      <string>Click to Copy Password</string>
     </property>
    </widget>
+   <zorder>header</zorder>
+   <zorder>cbody</zorder>
+   <zorder>sbody</zorder>
+   <zorder>usrnm</zorder>
+   <zorder>dashboard_text</zorder>
+   <zorder>pwdlabel</zorder>
+   <zorder>logoutbtn</zorder>
+   <zorder>addbtn</zorder>
+   <zorder>removebtn</zorder>
+   <zorder>appname</zorder>
+   <zorder>appfield</zorder>
+   <zorder>alertbox</zorder>
+   <zorder>emailfield</zorder>
+   <zorder>generatepwd</zorder>
+   <zorder>emailid</zorder>
+   <zorder>copypwd</zorder>
+   <zorder>applist</zorder>
   </widget>
  </widget>
  <resources>

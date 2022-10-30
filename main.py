@@ -277,17 +277,19 @@ widget.addWidget(mainwindow)
 widget.setFixedHeight(530)
 widget.setFixedWidth(850)
 widget.show()
-
+#UI Styling
+# stylesheet = open('vault8_styles.qss').read()
+# app.setStyleSheet(stylesheet)
+#Loading Fonts
+ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '.'))
+ffl = os.path.join(ROOT_DIR, 'rsrc', 'ProductSans.ttf')
+id = QFontDatabase.addApplicationFont(ffl)
+families = QFontDatabase.applicationFontFamilies(id)
+current_font = families[0]
+app.setFont(QFont(current_font, 10))
 alert = "background-color: #ff4747; color: #ffffff;border: 0.1px; border-radius:16px;"
 success = "background-color: #E4FFDF; color: #0F462D; border-radius:16px"
+#Misceallaneous
 regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 timer = QTimer()
-
-
-QFontDatabase.addApplicationFont("rsrc/ITCAvantGardeBk.ttf")
-with open('styles.qss', 'r') as stlf:
-    style = stlf.read()
-    app.setStyleSheet(style)
-# stylesheet = open('rsrc/vault8_styles.qss').read()
-# app.setStyleSheet(stylesheet)
 sys.exit(app.exec())
