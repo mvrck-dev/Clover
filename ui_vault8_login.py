@@ -23,10 +23,10 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(850, 530)
+        Dialog.resize(930, 500)
         self.LoginScreen = QWidget(Dialog)
         self.LoginScreen.setObjectName(u"LoginScreen")
-        self.LoginScreen.setGeometry(QRect(0, 0, 850, 530))
+        self.LoginScreen.setGeometry(QRect(0, 0, 930, 500))
         self.LoginScreen.setStyleSheet(u"")
         self.usrnmfield = QLineEdit(self.LoginScreen)
         self.usrnmfield.setObjectName(u"usrnmfield")
@@ -41,7 +41,11 @@ class Ui_Dialog(object):
         font.setBold(False)
         self.usrnmfield.setFont(font)
         self.usrnmfield.setAcceptDrops(False)
-        self.usrnmfield.setStyleSheet(u"")
+        self.usrnmfield.setStyleSheet(u"QLineEdit {\n"
+"    padding-left: 0.4em;\n"
+"    border-radius: 12.5px;\n"
+"    font-weight: 100;\n"
+"}")
         self.usrnmfield.setMaxLength(20)
         self.usrnmfield.setFrame(True)
         self.usrnmfield.setCursorMoveStyle(Qt.VisualMoveStyle)
@@ -51,7 +55,11 @@ class Ui_Dialog(object):
         self.pwdfield.setGeometry(QRect(510, 251, 311, 51))
         self.pwdfield.setFont(font)
         self.pwdfield.setAcceptDrops(False)
-        self.pwdfield.setStyleSheet(u"")
+        self.pwdfield.setStyleSheet(u"QLineEdit {\n"
+"    padding-left: 0.4em;\n"
+"    border-radius: 12.5px;\n"
+"    font-weight: 100;\n"
+"}")
         self.pwdfield.setMaxLength(20)
         self.pwdfield.setEchoMode(QLineEdit.Password)
         self.pwdfield.setCursorMoveStyle(Qt.VisualMoveStyle)

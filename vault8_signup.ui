@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>850</width>
-    <height>530</height>
+    <width>930</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>850</width>
-     <height>530</height>
+     <width>930</width>
+     <height>500</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -167,9 +167,7 @@
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">
-
-</string>
+     <string notr="true"/>
     </property>
     <property name="maxLength">
      <number>20</number>

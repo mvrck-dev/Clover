@@ -1,3 +1,55 @@
+import mysql.connector as mysql
+
+activedb = mysql.connect(host = "localhost", user = "root", password= "destiny012", database = "Vault8")
+cur = activedb.cursor(buffered=True)
+
+active_user = "robin"
+appname = "Git"
+
+cur.execute(f"SELECT email FROM {active_user}_appdb WHERE appname = '{appname}'")
+email = cur.fetchone()[0]
+print(email)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # from PyQt6.QtWidgets import QApplication, QWidget, QLabel
 # from PyQt6.QtGui import QFont, QFontDatabase
 # import sys, os
