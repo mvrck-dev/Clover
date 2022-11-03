@@ -28,7 +28,7 @@
    <widget class="QLineEdit" name="usrnmfield">
     <property name="geometry">
      <rect>
-      <x>510</x>
+      <x>532</x>
       <y>120</y>
       <width>311</width>
       <height>50</height>
@@ -74,7 +74,7 @@
    <widget class="QLineEdit" name="emailfield">
     <property name="geometry">
      <rect>
-      <x>510</x>
+      <x>532</x>
       <y>179</y>
       <width>311</width>
       <height>51</height>
@@ -114,7 +114,7 @@
    <widget class="QLineEdit" name="pwdfield">
     <property name="geometry">
      <rect>
-      <x>510</x>
+      <x>532</x>
       <y>239</y>
       <width>311</width>
       <height>51</height>
@@ -151,7 +151,7 @@
    <widget class="QLineEdit" name="cnfpwdfield">
     <property name="geometry">
      <rect>
-      <x>510</x>
+      <x>532</x>
       <y>300</y>
       <width>311</width>
       <height>51</height>
@@ -190,15 +190,15 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>851</width>
-      <height>531</height>
+      <width>930</width>
+      <height>500</height>
      </rect>
     </property>
     <property name="text">
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="Resources.qrc">:/Images/rsrc/vault8_login_wrapper_v0.1.png</pixmap>
+     <pixmap resource="Resources.qrc">:/Images/rsrc/clover_login_bg_v1.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -207,7 +207,7 @@
    <widget class="QPushButton" name="signupbutton">
     <property name="geometry">
      <rect>
-      <x>510</x>
+      <x>532</x>
       <y>368</y>
       <width>310</width>
       <height>50</height>
@@ -222,13 +222,13 @@
      <string notr="true"/>
     </property>
     <property name="text">
-     <string>CREATE ACCOUNT</string>
+     <string>SIGNUP</string>
     </property>
    </widget>
    <widget class="QLabel" name="alertbox">
     <property name="geometry">
      <rect>
-      <x>520</x>
+      <x>532</x>
       <y>430</y>
       <width>291</width>
       <height>31</height>
@@ -241,7 +241,7 @@
    <widget class="QPushButton" name="returnbtn">
     <property name="geometry">
      <rect>
-      <x>505</x>
+      <x>527</x>
       <y>60</y>
       <width>50</width>
       <height>50</height>

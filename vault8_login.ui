@@ -28,8 +28,8 @@
    <widget class="QLineEdit" name="usrnmfield">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>190</y>
+      <x>532</x>
+      <y>180</y>
       <width>311</width>
       <height>50</height>
      </rect>
@@ -75,8 +75,8 @@
    <widget class="QLineEdit" name="pwdfield">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>251</y>
+      <x>532</x>
+      <y>245</y>
       <width>311</width>
       <height>51</height>
      </rect>
@@ -116,8 +116,8 @@
    <widget class="QPushButton" name="loginbutton">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>320</y>
+      <x>532</x>
+      <y>310</y>
       <width>150</width>
       <height>50</height>
      </rect>
@@ -138,8 +138,8 @@
    <widget class="QPushButton" name="signupbutton">
     <property name="geometry">
      <rect>
-      <x>670</x>
-      <y>320</y>
+      <x>692</x>
+      <y>310</y>
       <width>150</width>
       <height>50</height>
      </rect>
@@ -160,7 +160,7 @@
    <widget class="QLabel" name="alertbox">
     <property name="geometry">
      <rect>
-      <x>520</x>
+      <x>532</x>
       <y>390</y>
       <width>291</width>
       <height>31</height>
@@ -175,18 +175,38 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>851</width>
-      <height>531</height>
+      <width>930</width>
+      <height>500</height>
      </rect>
     </property>
     <property name="text">
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="Resources.qrc">:/Images/rsrc/vault8_login_wrapper_v0.1.png</pixmap>
+     <pixmap resource="Resources.qrc">:/Images/rsrc/clover_login_bg_v1.png</pixmap>
     </property>
     <property name="scaledContents">
-     <bool>true</bool>
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>613</x>
+      <y>99</y>
+      <width>151</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Kollektif</family>
+      <pointsize>60</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Login</string>
     </property>
    </widget>
    <zorder>bg</zorder>
@@ -195,6 +215,7 @@
    <zorder>signupbutton</zorder>
    <zorder>alertbox</zorder>
    <zorder>usrnmfield</zorder>
+   <zorder>label</zorder>
   </widget>
  </widget>
  <resources>

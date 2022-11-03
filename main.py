@@ -18,7 +18,7 @@ class LoginScreen(QDialog): # Login Screen #AES DECRYPTION #Login Flow
     def __init__(self):
         super(LoginScreen, self).__init__()
         label = QLabel(self)
-        pixmap = QPixmap("rsrc/vault8_login_wrapper_v0.1.png")
+        pixmap = QPixmap("rsrc/clover_login_bg_v1.png")
         
         label.setPixmap(pixmap)
         loadUi("vault8_login.ui", self)
@@ -77,7 +77,7 @@ class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSU
     def __init__(self):
         super(SignUpScreen, self).__init__()
         label = QLabel(self)
-        pixmap = QPixmap("rsrc/vault8_login_wrapper_v0.1.png")
+        pixmap = QPixmap("rsrc/clover_login_bg_v1.png")
         label.setPixmap(pixmap)
         loadUi("vault8_signup.ui",self)
         
@@ -316,13 +316,16 @@ widget.show()
 
 #Font
 ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '.'))
-ffl = os.path.join(ROOT_DIR, 'rsrc', 'AppliedSansPro.ttf')
+ffl = os.path.join(ROOT_DIR, 'rsrc', 'Gilroy.ttf')
 id = QFontDatabase.addApplicationFont(ffl)
 families = QFontDatabase.applicationFontFamilies(id)
 current_font = families[0]
+print(current_font)
 app.setFont(QFont(current_font, 10))
 #Misceallaneous
 regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 timer = QTimer()
 
 sys.exit(app.exec())
+
+#abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+~`|}{[]\:;?><,./-=

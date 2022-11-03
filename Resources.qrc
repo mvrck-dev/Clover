@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/Images">
-        <file>rsrc/vault8_login_wrapper_v0.1.png</file>
-        <file>rsrc/vault8_login_wrapper.png</file>
+        <file>rsrc/clover_login_bg_v1.png</file>
         <file>rsrc/dashboard_art.png</file>
     </qresource>
     <qresource prefix="/Icons">
