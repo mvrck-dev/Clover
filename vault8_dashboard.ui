@@ -25,25 +25,6 @@
    <property name="styleSheet">
     <string notr="true">#cbody{background-color:#000}</string>
    </property>
-   <widget class="QLabel" name="header">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>270</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="Resources.qrc">:/Images/rsrc/dashboard_art.png</pixmap>
-    </property>
-   </widget>
    <widget class="QLabel" name="cbody">
     <property name="geometry">
      <rect>
@@ -76,9 +57,9 @@
    <widget class="QLabel" name="usrnm">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>110</width>
+      <x>15</x>
+      <y>77</y>
+      <width>181</width>
       <height>41</height>
      </rect>
     </property>
@@ -93,9 +74,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>40</y>
+      <y>10</y>
       <width>261</width>
-      <height>51</height>
+      <height>50</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -108,8 +89,8 @@
    <widget class="QLabel" name="pwdlabel">
     <property name="geometry">
      <rect>
-      <x>296</x>
-      <y>13</y>
+      <x>297</x>
+      <y>9</y>
       <width>281</width>
       <height>51</height>
      </rect>
@@ -124,8 +105,8 @@
    <widget class="QPushButton" name="removebtn">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>18</y>
+      <x>560</x>
+      <y>9</y>
       <width>48</width>
       <height>48</height>
      </rect>
@@ -253,17 +234,33 @@
      <string>Click to Copy Password</string>
     </property>
    </widget>
+   <widget class="QLabel" name="lsibody2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>90</y>
+      <width>270</width>
+      <height>431</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#lsibody2{background-color:#212121;}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
    <widget class="QLabel" name="lsbody">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>94</y>
+      <y>0</y>
       <width>270</width>
-      <height>411</height>
+      <height>70</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">#lsbody{background-color:#121212}</string>
+     <string notr="true">background-color:qlineargradient(spread:pad, x1:0.72897, y1:0.278227, x2:0, y2:0.983, stop:0 rgba(0, 25, 52, 255), stop:1 rgba(0, 0, 0, 255));</string>
     </property>
     <property name="text">
      <string/>
@@ -333,25 +330,41 @@
    <widget class="QPushButton" name="logoutbtn">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>10</y>
-      <width>101</width>
-      <height>41</height>
+      <x>210</x>
+      <y>78</y>
+      <width>41</width>
+      <height>36</height>
      </rect>
     </property>
     <property name="text">
-     <string>logout</string>
+     <string/>
     </property>
    </widget>
+   <widget class="QLabel" name="usrnm_">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>52</y>
+      <width>270</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#usrnm_{background-color:#1A1A1A; border-radius:20}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <zorder>lsibody2</zorder>
+   <zorder>usrnm_</zorder>
+   <zorder>lsbody</zorder>
    <zorder>rsbody</zorder>
    <zorder>rsibody2</zorder>
    <zorder>rsibody</zorder>
    <zorder>cbody</zorder>
    <zorder>applist</zorder>
-   <zorder>lsbody</zorder>
-   <zorder>header</zorder>
    <zorder>usrnm</zorder>
-   <zorder>dashboard_text</zorder>
    <zorder>pwdlabel</zorder>
    <zorder>removebtn</zorder>
    <zorder>appfield</zorder>
@@ -363,6 +376,7 @@
    <zorder>emailid</zorder>
    <zorder>addbtn</zorder>
    <zorder>logoutbtn</zorder>
+   <zorder>dashboard_text</zorder>
   </widget>
  </widget>
  <resources>

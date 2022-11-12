@@ -1,18 +1,28 @@
-import email
 import sys ,os
 from PyQt6.uic import loadUi
+from PyQt6 import QtWidgets
 from PyQt6.QtWidgets import QApplication, QDialog, QLabel
 from PyQt6.QtGui import QIcon, QPixmap, QFont, QFontDatabase 
 from PyQt6.QtCore import *
-from PyQt6.QtGui import *
-from PyQt6 import QtWidgets
 import re
 import mysql.connector as mysql
 import cipher_module
 import vault8_stylesheets as styles
+import sqlite3 as sql
 
-activedb = mysql.connect(host = "localhost", user = "root", password= "destiny012", database = "Vault8")
-cur = activedb.cursor(buffered=True)
+# activedb = mysql.connect(host = "localhost", user = "root", password= "destiny012", database = "Vault8")
+# cur = activedb.cursor(buffered=True)
+activedb = sql.connect("CLOVER_DB.db")
+cur = activedb.cursor()
+
+tbl1_ddl = """CREATE TABLE if not exists CLOVER_MASTERDB (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    CLOVER_ID TEXT UNIQUE NOT NULL,
+    CLOVER_EMAIL TEXT UNIQUE NOT NULL,
+    CLOVER_PASSWORD TEXT NOT NULL,
+    SALT TEXT NOT NULL)"""
+cur.execute(tbl1_ddl)
+
 
 class LoginScreen(QDialog): # Login Screen #AES DECRYPTION #Login Flow
     def __init__(self):
@@ -34,17 +44,24 @@ class LoginScreen(QDialog): # Login Screen #AES DECRYPTION #Login Flow
 
     def loginfunction(self):
         global user #global variable for the user
-        user = self.usrnmfield.text()
+        user = self.usrnmfield.text().lower()
         password = self.pwdfield.text()
 
         if len(user) == 0 or len(password) == 0:
             self.alertbox.setText("Please Input all Fields!")
             timer.singleShot(2000, self.clear_alertbox)
         else:
-            cur.execute(f"SELECT special_key FROM master_login_db WHERE username = '{user}' or email = '{user}'")
+            cur.execute(f"SELECT COUNT(CLOVER_USRNM) FROM CLOVER_MASTERDB WHERE CLOVER_USRNM = '{user}'")
+            row_count = cur.fetchall()
+            print(row_count)
+        if len(row_count) == 0:
+                self.alertbox.setText("Please Create an Account First!")
+                timer.singleShot(2000, self.clear_alertbox)
+        else:
+            cur.execute(f"SELECT nKEY FROM CLOVER_MASTERDB WHERE CLOVER_USRNM = '{user}' or CLOVER_EMAIL = '{user}'")
             special_key = cur.fetchone()
             hashed_pwd = cipher_module.hash(password, special_key[0])
-            cur.execute(f"SELECT password FROM master_login_db WHERE username = '{user}' or email = '{user}'")
+            cur.execute(f"SELECT CLOVER_PWD FROM CLOVER_MASTERDB WHERE username = '{user}' or email = '{user}'")
             result = cur.fetchall()
             if len(result) == 0:
                 self.alertbox.setText("Invalid Username or Email!")
@@ -94,14 +111,14 @@ class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSU
         self.cnfpwdfield.setStyleSheet(styles.form_style)
         
     def SignUpFunction(self): # This is the sign up function [WIP!]
-        user = self.usrnmfield.text()
-        email = self.emailfield.text()
+        user = self.usrnmfield.text().lower()
+        email = self.emailfield.text().lower()
         password = self.pwdfield.text()
         password_b = self.cnfpwdfield.text()
 
-        cur.execute(f"SELECT count(username) FROM master_login_db WHERE username = '{user}'")
+        cur.execute(f"SELECT count(CLOVER_USRNM) FROM CLOVER_MASTERDB WHERE CLOVER_USRNM = '{user}'")
         checkUser = cur.fetchall()
-        cur.execute(f"SELECT count(email) FROM master_login_db WHERE email = '{email}'")
+        cur.execute(f"SELECT count(CLOVER_EMAIL) FROM CLOVER_MASTERDB WHERE CLOVER_EMAIL = '{email}'")
         checkEmail = cur.fetchall()
 
         if len(user)==0 or len(password)==0 or len(email)==0 or len(password_b)==0:
@@ -129,12 +146,12 @@ class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSU
             timer.singleShot(2000, self.clear_alertbox)
 
         else:
-            user_db = user + "_appdb"
+            user_db = user + "_clover_appdb"
             salt = cipher_module.caesar_encrypt(user, 8)
             hashed_pwd = cipher_module.hash(password, salt)
             self.alertbox.setText(f"{user_db}, {email}, {password}, {password_b}, {hashed_pwd}") #testing
-            cur.execute(f"CREATE TABLE if not exists {user_db}(email varchar(50), appname varchar(20) NOT NULL, app_password varchar(100) NOT NULL);")
-            cur.execute(f"INSERT INTO master_login_db(username, email, password, special_key) VALUES('{user}','{email}', '{hashed_pwd}', '{salt}')")
+            cur.execute(f"CREATE TABLE if not exists {user_db}(email varchar(50), appname varchar(20) NOT NULL, app_password varchar(100) NOT NULL, app_enKEY varchar(100) NOT NULL);")
+            cur.execute(f"INSERT INTO CLOVER_MASTERDB(CLOVER_USRNM, CLOVER_EMAIL, CLOVER_PWD, nKEY) VALUES('{user}','{email}', '{hashed_pwd}', '{salt}')")
             activedb.commit()
             self.alertbox.setText("Account Created Successfully!\nRedirecting to Login Screen...")
             timer.singleShot(2200, self.gotologin)
@@ -191,7 +208,7 @@ class DashboardScreen(QDialog): # Dashboard Screen | AND ADD DATABASE TO LIST
 
         #Load App List
         self.applist.clear()
-        cur.execute(f"SELECT appname FROM {active_user}_appdb")
+        cur.execute(f"SELECT appname FROM {active_user}_clover_appdb")
         app_list = cur.fetchall()
         for app in app_list:
             self.applist.addItem(app[0])
@@ -215,7 +232,7 @@ class DashboardScreen(QDialog): # Dashboard Screen | AND ADD DATABASE TO LIST
             self.applist.addItem(app_name)
             app_email = self.emailfield.text()
             app_password = cipher_module.pwd_generator()
-            cur.execute(f"INSERT INTO {active_user}_appdb(appname, email, app_password) VALUES('{app_name}', '{app_email}', '{app_password}')")
+            cur.execute(f"INSERT INTO {active_user}_clover_appdb(appname, email, app_password) VALUES('{app_name}', '{app_email}', '{app_password}')")
             activedb.commit()
             self.appfield.setText("")
             self.emailfield.setText("")
@@ -233,7 +250,7 @@ class DashboardScreen(QDialog): # Dashboard Screen | AND ADD DATABASE TO LIST
             #Generate Password
             app_password = cipher_module.pwd_generator()
             #Add to DB
-            cur.execute(f"UPDATE {active_user}_appdb SET app_password = '{app_password}' WHERE appname = '{app_name}'")
+            cur.execute(f"UPDATE {active_user}_clover_appdb SET app_password = '{app_password}' WHERE appname = '{app_name}'")
             activedb.commit()
             #Copy to Clipboard
             cb = QApplication.clipboard()
@@ -254,7 +271,7 @@ class DashboardScreen(QDialog): # Dashboard Screen | AND ADD DATABASE TO LIST
             app_name = self.applist.currentItem().text()
             cb = QApplication.clipboard()
             cb.clear()
-            cur.execute(f"SELECT app_password FROM {active_user}_appdb WHERE appname = '{app_name}'")
+            cur.execute(f"SELECT app_password FROM {active_user}_clover_appdb WHERE appname = '{app_name}'")
             app_password = cur.fetchone()[0]
             cb.setText(app_password)
             self.alertbox.setText("Password Copied to Clipboard!")
@@ -274,7 +291,7 @@ class DashboardScreen(QDialog): # Dashboard Screen | AND ADD DATABASE TO LIST
             app_item = self.applist.currentItem().text()
             self.applist.takeItem(app_name)
             self.appname.setText("")
-            cur.execute(f"DELETE FROM {active_user}_appdb WHERE appname = '{app_item}'")
+            cur.execute(f"DELETE FROM {active_user}_clover_appdb WHERE appname = '{app_item}'")
             activedb.commit()
             self.alertbox.setText("App Removed!")
             self.alertbox.setStyleSheet(styles.success)
@@ -283,7 +300,7 @@ class DashboardScreen(QDialog): # Dashboard Screen | AND ADD DATABASE TO LIST
     def display_details(self):
         while self.applist.currentItem() != None:
             app_name = self.applist.currentItem().text()
-            cur.execute(f"SELECT email FROM {active_user}_appdb WHERE appname = '{app_name}'")
+            cur.execute(f"SELECT email FROM {active_user}_clover_appdb WHERE appname = '{app_name}'")
             email = cur.fetchone()[0]
             self.appname.setText(app_name)
             self.emailid.setText(email)
@@ -320,7 +337,6 @@ ffl = os.path.join(ROOT_DIR, 'rsrc', 'Gilroy.ttf')
 id = QFontDatabase.addApplicationFont(ffl)
 families = QFontDatabase.applicationFontFamilies(id)
 current_font = families[0]
-print(current_font)
 app.setFont(QFont(current_font, 10))
 #Misceallaneous
 regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
