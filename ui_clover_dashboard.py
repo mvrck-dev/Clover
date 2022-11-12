@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'vault8_dashboard.ui'
+## Form generated from reading UI file 'clover_dashboard.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.3.1
 ##
@@ -140,7 +140,7 @@ class Ui_Dialog(object):
     # setupUi
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Vault8 | SignUp", None))
+        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Clover | Dashboard", None))
         self.cbody.setText("")
         self.rsbody.setText("")
         self.usrnm.setText(QCoreApplication.translate("Dialog", u"usrnm", None))

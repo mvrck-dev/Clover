@@ -31,7 +31,7 @@ class LoginScreen(QDialog): # Login Screen #AES DECRYPTION #Login Flow
         pixmap = QPixmap("rsrc/clover_login_bg_v1.png")
         
         label.setPixmap(pixmap)
-        loadUi("vault8_login.ui", self)
+        loadUi("clover_login.ui", self)
 
         self.loginbutton.clicked.connect(self.loginfunction)
         self.signupbutton.clicked.connect(self.gotocreate)
@@ -96,7 +96,7 @@ class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSU
         label = QLabel(self)
         pixmap = QPixmap("rsrc/clover_login_bg_v1.png")
         label.setPixmap(pixmap)
-        loadUi("vault8_signup.ui",self)
+        loadUi("clover_signup.ui",self)
         
         #Assiging Functions to buttons
         self.returnbtn.clicked.connect(self.gotologin)
@@ -173,7 +173,7 @@ class DashboardScreen(QDialog): # Dashboard Screen | AND ADD DATABASE TO LIST
         label = QLabel(self)
         pixmap = QPixmap("rsrc/dashboard_art.png")
         label.setPixmap(pixmap)
-        loadUi("vault8_dashboard.ui",self)
+        loadUi("clover_dashboard.ui",self)
 
         #Load Button Functions
         self.logoutbtn.clicked.connect(self.logoutfunction) #LogOut Function

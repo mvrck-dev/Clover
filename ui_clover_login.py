@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'vault8_login.ui'
+## Form generated from reading UI file 'clover_login.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.3.1
 ##
@@ -107,7 +107,7 @@ class Ui_Dialog(object):
     # setupUi
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Vault8 | Login", None))
+        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Clover | Login", None))
         self.usrnmfield.setPlaceholderText(QCoreApplication.translate("Dialog", u"username", None))
         self.pwdfield.setPlaceholderText(QCoreApplication.translate("Dialog", u"password", None))
         self.loginbutton.setText(QCoreApplication.translate("Dialog", u"LOGIN", None))

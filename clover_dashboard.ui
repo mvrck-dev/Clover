@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Vault8 | SignUp</string>
+   <string>Clover | Dashboard</string>
   </property>
   <widget class="QWidget" name="DashboardScreen" native="true">
    <property name="geometry">
