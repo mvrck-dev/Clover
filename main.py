@@ -1,7 +1,7 @@
 import sys ,os
 from PyQt6.uic import loadUi
 from PyQt6 import QtWidgets
-from PyQt6.QtWidgets import QApplication, QDialog, QLabel
+from PyQt6.QtWidgets import QApplication, QDialog, QLabel, QSplashScreen
 from PyQt6.QtGui import QIcon, QPixmap, QFont, QFontDatabase 
 from PyQt6.QtCore import *
 import re
@@ -9,22 +9,64 @@ import mysql.connector as mysql
 import cipher_module
 import vault8_stylesheets as styles
 import sqlite3 as sql
+import time
+
 
 # activedb = mysql.connect(host = "localhost", user = "root", password= "destiny012", database = "Vault8")
 # cur = activedb.cursor(buffered=True)
 activedb = sql.connect("CLOVER_DB.db")
 cur = activedb.cursor()
 
+
 tbl1_ddl = """CREATE TABLE if not exists CLOVER_MASTERDB (
-    ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    CLOVER_ID TEXT UNIQUE NOT NULL,
+    SERIAL_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    CLOVER_USRNM TEXT UNIQUE NOT NULL,
     CLOVER_EMAIL TEXT UNIQUE NOT NULL,
-    CLOVER_PASSWORD TEXT NOT NULL,
-    SALT TEXT NOT NULL)"""
+    CLOVER_PWD TEXT NOT NULL,
+    nKEY TEXT NOT NULL)"""
 cur.execute(tbl1_ddl)
 
 
-class LoginScreen(QDialog): # Login Screen #AES DECRYPTION #Login Flow
+# class SplashScreen(QSplashScreen):
+#     def __init__(self):
+#         super(SplashScreen, self).__init__()
+#         loadUi("CLOVER_splash.ui", self)
+#         # self.setWindowIcon(QIcon("vault8.ico"))
+#         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
+#         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+#         # self.show()
+#         # self.timer = QTimer()
+#         # self.timer.timeout.connect(self.progress)
+#         # self.timer.start(35)
+#         # self.progressbar.setValue(0)
+
+#     def progress(self):
+#         for i in range(100):
+#             time.sleep(0.01)
+#             self.progressbar.setValue(i + 1)
+
+#         # global progress
+#         # progress = self.progressbar.value()
+#         # progress += 1
+#         # self.progressbar.setValue(progress)
+#         # if progress > 100:
+#         #     self.timer.stop()
+#         #     self.main = Login()
+#         #     self.main.show()
+#         #     self.close()
+
+#     # def mousePressEvent(self, event):
+#     #     self.dragPos = event.globalPos()
+
+#     # def mouseMoveEvent(self, event):
+#     #     if event.buttons() == Qt.MouseButton.LeftButton:
+#     #         self.move(self.pos() + event.globalPos() - self.dragPos)
+#     #         self.dragPos = event.globalPos()
+#     #         event.accept()
+
+
+
+class LoginScreen(QDialog): # Login Screen #AES DECRYPTION 
     def __init__(self):
         super(LoginScreen, self).__init__()
         label = QLabel(self)
@@ -46,33 +88,32 @@ class LoginScreen(QDialog): # Login Screen #AES DECRYPTION #Login Flow
         global user #global variable for the user
         user = self.usrnmfield.text().lower()
         password = self.pwdfield.text()
-
-        if len(user) == 0 or len(password) == 0:
-            self.alertbox.setText("Please Input all Fields!")
-            timer.singleShot(2000, self.clear_alertbox)
-        else:
-            cur.execute(f"SELECT COUNT(CLOVER_USRNM) FROM CLOVER_MASTERDB WHERE CLOVER_USRNM = '{user}'")
-            row_count = cur.fetchall()
-            print(row_count)
-        if len(row_count) == 0:
-                self.alertbox.setText("Please Create an Account First!")
+        cur.execute(f"SELECT COUNT(CLOVER_USRNM) FROM CLOVER_MASTERDB WHERE CLOVER_USRNM = '{user}'")
+        row_count = cur.fetchall()
+        def login():
+            if len(user) == 0 or len(password) == 0:
+                self.alertbox.setText("Please Input all Fields!")
                 timer.singleShot(2000, self.clear_alertbox)
-        else:
-            cur.execute(f"SELECT nKEY FROM CLOVER_MASTERDB WHERE CLOVER_USRNM = '{user}' or CLOVER_EMAIL = '{user}'")
-            special_key = cur.fetchone()
-            hashed_pwd = cipher_module.hash(password, special_key[0])
-            cur.execute(f"SELECT CLOVER_PWD FROM CLOVER_MASTERDB WHERE username = '{user}' or email = '{user}'")
-            result = cur.fetchall()
-            if len(result) == 0:
-                self.alertbox.setText("Invalid Username or Email!")
+            elif row_count[0][0] == 0:
+                self.alertbox.setText("Login Credentials Not Found.\nPlease Create an Account First!")
                 timer.singleShot(2000, self.clear_alertbox)
-            elif hashed_pwd == result[0][0]:
-                self.alertbox.setText("Authenticated!\nPress Login again to continue.")
-                timer.singleShot(5000, self.clear_alertbox)
-                self.loginbutton.clicked.connect(self.gotodashboard)
             else:
-                self.alertbox.setText("Invalid Password!")
-                timer.singleShot(2000, self.clear_alertbox)
+                cur.execute(f"SELECT nKEY FROM CLOVER_MASTERDB WHERE CLOVER_USRNM = '{user}' or CLOVER_EMAIL = '{user}'")
+                special_key = cur.fetchone()
+                hashed_pwd = cipher_module.hash(password, special_key[0])
+                cur.execute(f"SELECT CLOVER_PWD FROM CLOVER_MASTERDB WHERE CLOVER_USRNM = '{user}' or CLOVER_EMAIL = '{user}'")
+                result = cur.fetchall()
+                if len(result) == 0:
+                    self.alertbox.setText("Invalid Username or Email!")
+                    timer.singleShot(2000, self.clear_alertbox)
+                elif hashed_pwd == result[0][0]:
+                    self.alertbox.setText("Authenticated!\nPress Login again to continue.")
+                    timer.singleShot(5000, self.clear_alertbox)
+                    self.loginbutton.clicked.connect(self.gotodashboard)
+                else:
+                    self.alertbox.setText("Invalid Password!")
+                    timer.singleShot(2000, self.clear_alertbox)
+        login()
 
     def gotocreate(self): #[WIP]
         signup = SignUpScreen()
@@ -86,7 +127,6 @@ class LoginScreen(QDialog): # Login Screen #AES DECRYPTION #Login Flow
 
     def clear_alertbox(self):
         self.alertbox.setText("")
-        self.alertbox.setStyleSheet("background-color: #00000000; color: #00000000;")
 
 
 #THERE ARE STILL BUGS IN THE FLOW OF THE CODE OF THIS MF! I NEED TO FIX IT ASAP!
@@ -163,7 +203,6 @@ class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSU
 
     def clear_alertbox(self):
         self.alertbox.setText("")
-        self.alertbox.setStyleSheet("background-color: #00000000; color: #00000000;")
 
 
 

@@ -11,9 +11,9 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Clover | Login</string>
+   <string>Vault8</string>
   </property>
-  <widget class="QWidget" name="LoginScreen" native="true">
+  <widget class="QWidget" name="SignUpScreen" native="true">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -29,7 +29,7 @@
     <property name="geometry">
      <rect>
       <x>532</x>
-      <y>180</y>
+      <y>120</y>
       <width>311</width>
       <height>50</height>
      </rect>
@@ -42,19 +42,18 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>25</pointsize>
+      <pointsize>23</pointsize>
       <bold>false</bold>
      </font>
     </property>
     <property name="acceptDrops">
      <bool>false</bool>
     </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
     <property name="styleSheet">
-     <string notr="true">QLineEdit {
-    padding-left: 0.4em;
-    border-radius: 12.5px;
-    font-weight: 100;
-}</string>
+     <string notr="true"/>
     </property>
     <property name="maxLength">
      <number>20</number>
@@ -72,18 +71,18 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLineEdit" name="pwdfield">
+   <widget class="QLineEdit" name="emailfield">
     <property name="geometry">
      <rect>
       <x>532</x>
-      <y>245</y>
+      <y>179</y>
       <width>311</width>
       <height>51</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>25</pointsize>
+      <pointsize>23</pointsize>
       <bold>false</bold>
      </font>
     </property>
@@ -91,11 +90,47 @@
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">QLineEdit {
-    padding-left: 0.4em;
-    border-radius: 12.5px;
-    font-weight: 100;
-}</string>
+     <string notr="true"/>
+    </property>
+    <property name="inputMethodHints">
+     <set>Qt::ImhEmailCharactersOnly</set>
+    </property>
+    <property name="maxLength">
+     <number>50</number>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::Normal</enum>
+    </property>
+    <property name="placeholderText">
+     <string>email</string>
+    </property>
+    <property name="cursorMoveStyle">
+     <enum>Qt::VisualMoveStyle</enum>
+    </property>
+    <property name="clearButtonEnabled">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="pwdfield">
+    <property name="geometry">
+     <rect>
+      <x>532</x>
+      <y>239</y>
+      <width>311</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>23</pointsize>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="maxLength">
      <number>20</number>
@@ -113,61 +148,41 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="loginbutton">
+   <widget class="QLineEdit" name="cnfpwdfield">
     <property name="geometry">
      <rect>
       <x>532</x>
-      <y>310</y>
-      <width>150</width>
-      <height>50</height>
+      <y>300</y>
+      <width>311</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>15</pointsize>
-      <bold>true</bold>
+      <pointsize>23</pointsize>
+      <bold>false</bold>
      </font>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
     </property>
     <property name="styleSheet">
      <string notr="true"/>
     </property>
-    <property name="text">
-     <string>LOGIN</string>
+    <property name="maxLength">
+     <number>20</number>
     </property>
-   </widget>
-   <widget class="QPushButton" name="signupbutton">
-    <property name="geometry">
-     <rect>
-      <x>692</x>
-      <y>310</y>
-      <width>150</width>
-      <height>50</height>
-     </rect>
+    <property name="echoMode">
+     <enum>QLineEdit::Password</enum>
     </property>
-    <property name="font">
-     <font>
-      <pointsize>15</pointsize>
-      <bold>true</bold>
-     </font>
+    <property name="placeholderText">
+     <string>confirm password</string>
     </property>
-    <property name="styleSheet">
-     <string notr="true"/>
+    <property name="cursorMoveStyle">
+     <enum>Qt::VisualMoveStyle</enum>
     </property>
-    <property name="text">
-     <string>SIGNUP</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="alertbox">
-    <property name="geometry">
-     <rect>
-      <x>532</x>
-      <y>390</y>
-      <width>291</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
+    <property name="clearButtonEnabled">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLabel" name="bg">
@@ -186,36 +201,77 @@
      <pixmap resource="Resources.qrc">:/Images/rsrc/clover_login_bg_v1.png</pixmap>
     </property>
     <property name="scaledContents">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QPushButton" name="signupbutton">
     <property name="geometry">
      <rect>
-      <x>613</x>
-      <y>99</y>
-      <width>151</width>
-      <height>71</height>
+      <x>532</x>
+      <y>368</y>
+      <width>310</width>
+      <height>50</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Kollektif</family>
-      <pointsize>60</pointsize>
-      <bold>true</bold>
+      <pointsize>15</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="text">
-     <string>Login</string>
+     <string>SIGNUP</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="alertbox">
+    <property name="geometry">
+     <rect>
+      <x>532</x>
+      <y>430</y>
+      <width>291</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="returnbtn">
+    <property name="geometry">
+     <rect>
+      <x>527</x>
+      <y>60</y>
+      <width>50</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#returnbtn{border-radius: 25px; background-color: #00000000;}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="Resources.qrc">
+      <normaloff>:/Icons/rsrc/return_icon.png</normaloff>:/Icons/rsrc/return_icon.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>35</width>
+      <height>35</height>
+     </size>
     </property>
    </widget>
    <zorder>bg</zorder>
    <zorder>pwdfield</zorder>
-   <zorder>loginbutton</zorder>
+   <zorder>usrnmfield</zorder>
    <zorder>signupbutton</zorder>
    <zorder>alertbox</zorder>
-   <zorder>usrnmfield</zorder>
-   <zorder>label</zorder>
+   <zorder>emailfield</zorder>
+   <zorder>cnfpwdfield</zorder>
+   <zorder>returnbtn</zorder>
   </widget>
  </widget>
  <resources>

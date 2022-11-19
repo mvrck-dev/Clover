@@ -5,6 +5,19 @@ from hashlib import sha256
 import secrets
 import hashlib
 import random
+import sqlite3 as sql
+from uuid import getnode as get_mac
+mac = hex(get_mac())
+
+activedb = sql.connect("CLOVER_DB.db")
+cur = activedb.cursor()
+
+
+tbl1_ddl = """CREATE TABLE if not exists CLOVER_VARIABLES (
+    SERIAL_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    VARIABLES INTEGER NOT NULL,
+    nKEY TEXT NOT NULL)"""
+cur.execute(tbl1_ddl)
 
 
 #CIPHER ENCRYPTION : To generate a unique Salt for encryption

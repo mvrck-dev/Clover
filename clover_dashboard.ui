@@ -80,7 +80,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">#dashboard_text{color: #FFFFFF; font-size: 48px; font-weight: 500;}</string>
+     <string notr="true">#dashboard_text{color: #FFFFFF; font-size: 48px; font-weight: 200;}</string>
     </property>
     <property name="text">
      <string>dashboard</string>
@@ -105,8 +105,8 @@
    <widget class="QPushButton" name="removebtn">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>9</y>
+      <x>556</x>
+      <y>10</y>
       <width>48</width>
       <height>48</height>
      </rect>
