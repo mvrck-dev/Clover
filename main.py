@@ -1,77 +1,26 @@
 import sys ,os
 from PyQt6.uic import loadUi
 from PyQt6 import QtWidgets
-from PyQt6.QtWidgets import QApplication, QDialog, QLabel, QSplashScreen
+from PyQt6.QtWidgets import QApplication, QDialog, QLabel, QProgressBar
 from PyQt6.QtGui import QIcon, QPixmap, QFont, QFontDatabase 
 from PyQt6.QtCore import *
 import re
-import mysql.connector as mysql
 import cipher_module
 import vault8_stylesheets as styles
 import sqlite3 as sql
 import time
+import clover_init
 
-
-# activedb = mysql.connect(host = "localhost", user = "root", password= "destiny012", database = "Vault8")
-# cur = activedb.cursor(buffered=True)
+clover_init.package_init()
 activedb = sql.connect("CLOVER_DB.db")
 cur = activedb.cursor()
 
-
-tbl1_ddl = """CREATE TABLE if not exists CLOVER_MASTERDB (
-    SERIAL_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    CLOVER_USRNM TEXT UNIQUE NOT NULL,
-    CLOVER_EMAIL TEXT UNIQUE NOT NULL,
-    CLOVER_PWD TEXT NOT NULL,
-    nKEY TEXT NOT NULL)"""
-cur.execute(tbl1_ddl)
-
-
-# class SplashScreen(QSplashScreen):
-#     def __init__(self):
-#         super(SplashScreen, self).__init__()
-#         loadUi("CLOVER_splash.ui", self)
-#         # self.setWindowIcon(QIcon("vault8.ico"))
-#         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
-#         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
-#         # self.show()
-#         # self.timer = QTimer()
-#         # self.timer.timeout.connect(self.progress)
-#         # self.timer.start(35)
-#         # self.progressbar.setValue(0)
-
-#     def progress(self):
-#         for i in range(100):
-#             time.sleep(0.01)
-#             self.progressbar.setValue(i + 1)
-
-#         # global progress
-#         # progress = self.progressbar.value()
-#         # progress += 1
-#         # self.progressbar.setValue(progress)
-#         # if progress > 100:
-#         #     self.timer.stop()
-#         #     self.main = Login()
-#         #     self.main.show()
-#         #     self.close()
-
-#     # def mousePressEvent(self, event):
-#     #     self.dragPos = event.globalPos()
-
-#     # def mouseMoveEvent(self, event):
-#     #     if event.buttons() == Qt.MouseButton.LeftButton:
-#     #         self.move(self.pos() + event.globalPos() - self.dragPos)
-#     #         self.dragPos = event.globalPos()
-#     #         event.accept()
-
-
-
+time.sleep(2)
 class LoginScreen(QDialog): # Login Screen #AES DECRYPTION 
     def __init__(self):
         super(LoginScreen, self).__init__()
         label = QLabel(self)
         pixmap = QPixmap("rsrc/clover_login_bg_v1.png")
-        
         label.setPixmap(pixmap)
         loadUi("clover_login.ui", self)
 
@@ -134,7 +83,7 @@ class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSU
     def __init__(self):
         super(SignUpScreen, self).__init__()
         label = QLabel(self)
-        pixmap = QPixmap("rsrc/clover_login_bg_v1.png")
+        pixmap = QPixmap("rsrc/clover_login_bg_v2.png")
         label.setPixmap(pixmap)
         loadUi("clover_signup.ui",self)
         

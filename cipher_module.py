@@ -12,14 +12,6 @@ mac = hex(get_mac())
 activedb = sql.connect("CLOVER_DB.db")
 cur = activedb.cursor()
 
-
-tbl1_ddl = """CREATE TABLE if not exists CLOVER_VARIABLES (
-    SERIAL_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    VARIABLES INTEGER NOT NULL,
-    nKEY TEXT NOT NULL)"""
-cur.execute(tbl1_ddl)
-
-
 #CIPHER ENCRYPTION : To generate a unique Salt for encryption
 characters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '!', '_']
 def caesar_encrypt(plain_text, shift_key):
