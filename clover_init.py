@@ -2,6 +2,7 @@ import sqlite3 as sql
 import subprocess
 import sys
 from uuid import getnode as get_mac
+import hashlib
 
 def package_init():
     div = 100/10
@@ -128,73 +129,40 @@ def package_init():
         print("hashlib is now installed")
         import hashlib
         n += div
+        if package_init() >= 100:
+            print(package_init())
+            print("All packages are installed")
+        else:
+            print(package_init())
+            print("Some packages are not installed")
+            print("Please install the missing packages")
+            print("Then restart the program")
     return n
-if package_init() >= 100:
-    print(package_init())
-    print("All packages are installed")
-else:
-    print(package_init())
-    print("Some packages are not installed")
-    print("Please install the missing packages")
-    print("Then restart the program")
 
+package_init()
 
-activedb = sql.connect("CLOVER_DB.db")
-cur = activedb.cursor()
+def db_init():
+    activedb = sql.connect("CLOVER_DB.db")
+    cur = activedb.cursor()
 
+    tbl1_ddl = """CREATE TABLE if not exists CLOVER_MASTERDB (
+        SERIAL_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        CLOVER_USRNM TEXT UNIQUE NOT NULL,
+        CLOVER_EMAIL TEXT UNIQUE NOT NULL,
+        CLOVER_PWD TEXT NOT NULL,
+        nKEY TEXT NOT NULL)"""
+    cur.execute(tbl1_ddl)
 
-tbl1_ddl = """CREATE TABLE if not exists CLOVER_MASTERDB (
-    SERIAL_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    CLOVER_USRNM TEXT UNIQUE NOT NULL,
-    CLOVER_EMAIL TEXT UNIQUE NOT NULL,
-    CLOVER_PWD TEXT NOT NULL,
-    nKEY TEXT NOT NULL)"""
-cur.execute(tbl1_ddl)
+    tbl2_ddl = """CREATE TABLE if not exists CLOVER_VARIABLES (
+        SERIAL_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        VARIABLE TEXT NOT NULL,
+        nKEY TEXT NOT NULL)"""
+    cur.execute(tbl2_ddl)
 
-mac = hex(get_mac())
+    mac = hex(get_mac())
+    hashed_mac = hashlib.sha256(mac.encode('utf-8')).hexdigest()
+    cur.execute(f"INSERT INTO CLOVER_MASTERDB(VARIABLE, nKEY) VALUES('MASTER', '{hashed_mac}')")
+    activedb.commit()
+    activedb.close()
 
-tbl1_ddl = """CREATE TABLE if not exists CLOVER_VARIABLES (
-    SERIAL_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    VARIABLES INTEGER NOT NULL,
-    nKEY TEXT NOT NULL)"""
-cur.execute(tbl1_ddl)
-
-# db = sqlite3.connect("sample.db")
-# cur = db.cursor()
-
-# tbl1_ddl = """CREATE TABLE if not exists CLOVER_MASTERDB (
-#     ID INTEGER PRIMARY KEY AUTOINCREMENT,
-#     CLOVER_ID TEXT UNIQUE NOT NULL,
-#     CLOVER_EMAIL TEXT UNIQUE NOT NULL,
-#     CLOVER_PASSWORD TEXT NOT NULL,
-#     SALT TEXT NOT NULL)"""
-
-# cur.execute(tbl1_ddl)
-# # cur.execute("pragma table_info('CLOVER_MASTERDB');")
-# # print(cur.fetchall())
-
-
-# db.commit()
-
-# db.close()
-
-
-# import mysql.connector as mysql
-
-
-# # Initialising Database
-# activedb = mysql.connect(host = "localhost", user = "root", password= "destiny012", database = "Clover")
-# print("Initialised MySql Database Connection.")
-# cur = activedb.cursor()
-
-# # Setting Up Databases
-# cur.execute(f"CREATE DATABASE if not exists Clover")
-# print("Database has been successfully created.")
-# cur.execute("USE Clover")
-# print("Database Clover is Active.")
-# cur.execute(f"CREATE TABLE if not exists clover_logindb(userid int(5) PRIMARY KEY, username varchar(20) NOT NULL UNIQUE, email varchar(50) NOT NULL UNIQUE, password varchar(1000) NOT NULL);")
-# print("Master Login is now active")
-# # cur.execute(f"CREATE TABLE if not exists master_login_db(userid int(5), username varchar(20) NOT NULL, appname(20) NOT NULL, app_password varchar(1000) NOT NULL);")
-# # print("Master Login is now active")
-
-# #insert into master_login_db values(0001, 'ray', 'concepts.ray@gmail.com', '08ed649a54beeca6e677962ea65ce7ea20267dc0ce4a0c88b6a6d5bdf22a5e71');
+db_init()

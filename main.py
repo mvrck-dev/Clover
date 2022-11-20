@@ -12,6 +12,7 @@ import time
 import clover_init
 
 clover_init.package_init()
+clover_init.db_init()
 activedb = sql.connect("CLOVER_DB.db")
 cur = activedb.cursor()
 
@@ -143,7 +144,8 @@ class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSU
             cur.execute(f"INSERT INTO CLOVER_MASTERDB(CLOVER_USRNM, CLOVER_EMAIL, CLOVER_PWD, nKEY) VALUES('{user}','{email}', '{hashed_pwd}', '{salt}')")
             activedb.commit()
             self.alertbox.setText("Account Created Successfully!\nRedirecting to Login Screen...")
-            timer.singleShot(2200, self.gotologin)
+            timer.singleShot(1000, self.gotologin)
+
 
     def gotologin(self):
         login = LoginScreen()

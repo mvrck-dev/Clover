@@ -7,6 +7,7 @@ import hashlib
 import random
 import sqlite3 as sql
 from uuid import getnode as get_mac
+
 mac = hex(get_mac())
 
 activedb = sql.connect("CLOVER_DB.db")

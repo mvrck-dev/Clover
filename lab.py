@@ -1,16 +1,16 @@
 
-# import sqlite3
+import sqlite3
 
 
-# db = sqlite3.connect("sample.db")
-# cur = db.cursor()
+db = sqlite3.connect("sample.db")
+cur = db.cursor()
 
-# tbl1_ddl = """CREATE TABLE if not exists CLOVER_MASTERDB (
-#     ID INTEGER PRIMARY KEY AUTOINCREMENT,
-#     CLOVER_ID TEXT UNIQUE NOT NULL,
-#     CLOVER_EMAIL TEXT UNIQUE NOT NULL,
-#     CLOVER_PASSWORD TEXT NOT NULL,
-#     SALT TEXT NOT NULL)"""
+tbl1_ddl = """CREATE TABLE if not exists CLOVER_MASTERDB (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    CLOVER_ID TEXT UNIQUE NOT NULL,
+    CLOVER_EMAIL TEXT UNIQUE NOT NULL,
+    CLOVER_PASSWORD TEXT NOT NULL,
+    SALT TEXT NOT NULL)"""
 
 # cur.execute(tbl1_ddl)
 # # cur.execute("pragma table_info('CLOVER_MASTERDB');")
