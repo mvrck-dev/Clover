@@ -130,7 +130,7 @@ except ImportError:
     import hashlib
     n += div
 if n == 100:
-    print("All Packages are installed")
+    print("All Packages are installed\nInitialising Clover[main.py]")
 else:
     print("Some Packages are not installed")
     print("Please try again")
