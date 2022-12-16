@@ -4,25 +4,24 @@ import sys
 from uuid import getnode as get_mac
 import hashlib
 import time
-div = 100/10
 
-print("Checking Packages")
-try:
-    import PyQt6
-    print("PyQt6 is installed")
-    n = div
-except ImportError:
-    print("PyQt6 is not installed")
-    print("installing PyQt6")
-    subprocess.check_call([sys.executable, "-m", "pip", "install", 'PyQt6'])
-    subprocess.check_call([sys.executable, "-m", "pip", "install", 'pyqt6-tools'])
-    print("PyQt6 is now installed")
-    import PyQt6
-    n = div
+if sys.version >= '3.9':
+    print('Your Python version is above 3.9')
+    print('Checking Packages')
+    time.sleep(2)
+else:
+    print('Your Python version is not above 3.9')
+    print('Please update your Python version')
+    time.sleep(2)
+    exit()
+
+div = 100/10
+n = 0
+
 try:
     import re
     print("re is installed")
-    n += div
+    n = div
 except ImportError:
     print("re is not installed")
     print("installing re")
@@ -128,6 +127,20 @@ except ImportError:
         [sys.executable, "-m", "pip", "install", 'hashlib'])
     print("hashlib is now installed")
     import hashlib
+    n += div
+print("If the code breaks down in the next step please run the program again.")
+time.sleep(2)
+try:
+    import PyQt6
+    print("PyQt6 is installed")
+    n += div
+except ImportError:
+    print("PyQt6 is not installed")
+    print("installing PyQt6")
+    subprocess.check_call([sys.executable, "-m", "pip", "install", 'PyQt6'])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", 'pyqt6-tools'])
+    print("PyQt6 is now installed")
+    import PyQt6
     n += div
 if n == 100:
     print("All Packages are installed\nInitialising Clover[main.py]")

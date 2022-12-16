@@ -13,7 +13,7 @@ from PyQt6.QtWidgets import QApplication, QDialog, QLabel, QProgressBar
 from PyQt6.QtGui import QIcon, QPixmap, QFont, QFontDatabase 
 from PyQt6.QtCore import *
 #Custom modules
-import cipher_module
+import clover_cryptographer
 import clover_stylesheets as styles
 
 #Conncection to SQLite DB
@@ -65,7 +65,7 @@ class LoginScreen(QDialog): # Login Screen #AES DECRYPTION
                 #Check if the password is correct
                 cur.execute(f"SELECT nKEY FROM CLOVER_MASTERDB WHERE CLOVER_USRNM = '{user}' or CLOVER_EMAIL = '{user}'")
                 special_key = cur.fetchone()
-                hashed_pwd = cipher_module.hash(password, special_key[0])
+                hashed_pwd = clover_cryptographer.hash(password, special_key[0])
                 cur.execute(f"SELECT CLOVER_PWD FROM CLOVER_MASTERDB WHERE CLOVER_USRNM = '{user}' or CLOVER_EMAIL = '{user}'")
                 result = cur.fetchall()
                 if len(result) == 0: 
@@ -96,7 +96,7 @@ class LoginScreen(QDialog): # Login Screen #AES DECRYPTION
 
 
 #Signup Screen
-class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSUE and password strength checker and aes encrption
+class SignUpScreen(QDialog): # Sign Up Screen 
     def __init__(self):
         super(SignUpScreen, self).__init__()
         label = QLabel(self)
@@ -116,7 +116,7 @@ class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSU
         self.emailfield.setStyleSheet(styles.form_style)
         self.cnfpwdfield.setStyleSheet(styles.form_style)
         
-    def SignUpFunction(self): # This is the sign up function [WIP!]
+    def SignUpFunction(self): # This is the sign up function 
         user = self.usrnmfield.text().lower()
         email = self.emailfield.text().lower()
         password = self.pwdfield.text()
@@ -153,8 +153,8 @@ class SignUpScreen(QDialog): # Sign Up Screen #FIX SPECIAL CHARACTERS ENTRY ISSU
 
         else:
             user_db = user + "_clover_appdb"
-            salt = cipher_module.caesar_encrypt(user, 8)
-            hashed_pwd = cipher_module.hash(password, salt)
+            salt = clover_cryptographer.caesar_encrypt(user, 8)
+            hashed_pwd = clover_cryptographer.hash(password, salt)
             self.alertbox.setText(f"{user_db}, {email}, {password}, {password_b}, {hashed_pwd}") #testing
             cur.execute(f"CREATE TABLE if not exists {user_db}(email varchar(50), appname varchar(20) NOT NULL, app_password varchar(100) NOT NULL);")
             cur.execute(f"INSERT INTO CLOVER_MASTERDB(CLOVER_USRNM, CLOVER_EMAIL, CLOVER_PWD, nKEY) VALUES('{user}','{email}', '{hashed_pwd}', '{salt}')")
@@ -237,7 +237,7 @@ class DashboardScreen(QDialog): # Dashboard Screen
             app_name = self.appfield.text()
             self.applist.addItem(app_name)
             app_email = self.emailfield.text()
-            app_password = cipher_module.pwd_generator()
+            app_password = clover_cryptographer.pwd_generator()
             cur.execute(f"INSERT INTO {active_user}_clover_appdb(appname, email, app_password) VALUES('{app_name}', '{app_email}', '{app_password}')")
             activedb.commit()
             self.appfield.setText("")
@@ -254,7 +254,7 @@ class DashboardScreen(QDialog): # Dashboard Screen
         else:
             app_name = self.applist.currentItem().text()
             #Generate Password
-            app_password = cipher_module.pwd_generator()
+            app_password = clover_cryptographer.pwd_generator()
             #Add to DB
             cur.execute(f"UPDATE {active_user}_clover_appdb SET app_password = '{app_password}' WHERE appname = '{app_name}'")
             activedb.commit()
@@ -286,7 +286,7 @@ class DashboardScreen(QDialog): # Dashboard Screen
 
 
     #Remove items from list
-    def remove_app(self): #DONE
+    def remove_app(self): 
         while self.applist.currentItem() == None:
             self.alertbox.setText("Please select an app!")
             self.alertbox.setStyleSheet(styles.alert)
