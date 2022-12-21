@@ -32,9 +32,10 @@ class LoginScreen(QDialog): # Login Screen #AES DECRYPTION
         label.setPixmap(pixmap)
         loadUi("clover_login.ui", self)
         #Set the window title
+        app = QApplication(sys.argv)
         self.setWindowTitle("Clover | Login")
         #Set the window icon
-        self.setWindowIcon(QIcon("rsrc/clover_icon.png"))
+        app.setWindowIcon(QIcon("rsrc/clover_icon.png"))
         
         #Assign functions to buttons
         self.loginbutton.clicked.connect(self.loginfunction)
